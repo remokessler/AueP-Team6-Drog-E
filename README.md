@@ -14,6 +14,7 @@ Jetzt meine Ã„nderungen machen. Dann sieht es etwa so aus. Hier sieht man alle Ã
 
 ![image-20220105203619197](C:\Users\Remo\AppData\Roaming\Typora\typora-user-images\image-20220105203619197.png)
 
-Wenn fertig einen Kommentar eigeben und commit to main klicken.
+Wenn fertig einen Kommentar eigeben und commit to main klicken. (jetzt ist alles Lokal eigecheckt)
 
 ![image-20220105203813127](C:\Users\Remo\AppData\Roaming\Typora\typora-user-images\image-20220105203813127.png)
+
