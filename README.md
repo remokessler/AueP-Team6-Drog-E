@@ -18,3 +18,8 @@ Wenn fertig einen Kommentar eigeben und commit to main klicken. (jetzt ist alles
 
 ![image-20220105203813127](C:\Users\Remo\AppData\Roaming\Typora\typora-user-images\image-20220105203813127.png)
 
+Jetzt auf Push origin klicken, das 1 symbolisiert wie viele commits raufgeladen werden.
+
+![image-20220105203943878](C:\Users\Remo\AppData\Roaming\Typora\typora-user-images\image-20220105203943878.png)
+
+Jetzt ist es auf dem Server
