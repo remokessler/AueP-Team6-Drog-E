@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { navItems } from '../../_nav';
 
 @Component({
   selector: 'app-nav-menu',
@@ -6,13 +7,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./nav-menu.component.css']
 })
 export class NavMenuComponent {
-  isExpanded = false;
+  public sidebarMinimized = false;
+  public navItems = navItems;
 
-  collapse() {
-    this.isExpanded = false;
-  }
-
-  toggle() {
-    this.isExpanded = !this.isExpanded;
+  public toggleMinimize(e: boolean) {
+    this.sidebarMinimized = e;
   }
 }
