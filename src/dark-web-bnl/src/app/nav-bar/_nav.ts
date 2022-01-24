@@ -7,7 +7,7 @@ export const navItems: INavData[] = [
   },
   {
     name: 'Roboter',
-    url: '/robot',
+    url: '/robots',
     icon: 'fas fa-robot',
     badge: {
       variant: 'danger',

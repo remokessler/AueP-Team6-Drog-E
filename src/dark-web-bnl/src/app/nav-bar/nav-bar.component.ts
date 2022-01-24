@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { navItems } from '../../_nav';
+import { navItems } from './_nav';
 
 @Component({
-  selector: 'app-nav-menu',
-  templateUrl: './nav-menu.component.html',
-  styleUrls: ['./nav-menu.component.css']
+  selector: 'app-nav-bar',
+  templateUrl: './nav-bar.component.html',
+  styleUrls: ['./nav-bar.component.css']
 })
-export class NavMenuComponent {
+export class NavBarComponent {
   public sidebarMinimized = false;
   public navItems = navItems;
 
