@@ -41,66 +41,9 @@
     <app-sidebar-nav [navItems]="navItems" [perfectScrollbar] [disabled]="appSidebar.minimized"></app-sidebar-nav>
     <app-sidebar-minimizer></app-sidebar-minimizer>
   </app-sidebar>
-  <!-- Main content -->
   <main class="main">
-    <!-- Breadcrumb -->
-    <!-- breaking change 'cui-breadcrumb' -->
-    <cui-breadcrumb>
-      <!-- Breadcrumb Menu-->
-      <li class="breadcrumb-menu d-md-down-none">
-        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-          <a class="btn" href="#"><i class="icon-speech"></i></a>
-          <a class="btn" [routerLink]="['/dashboard']"><i class="fas fa-robot"></i> &nbsp;Dashboard</a>
-          <a class="btn" href="#"><i class="icon-settings"></i> &nbsp;Settings</a>
-        </div>
-      </li>
-    </cui-breadcrumb>
     <div class="container-fluid">
       <router-outlet></router-outlet>
     </div>
   </main>
 </div>
-
-<!--<header>
-  <nav
-    class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
-  >
-    <div class="container">
-      <a class="navbar-brand" [routerLink]="['/']">dark_api_bnl</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target=".navbar-collapse"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div
-        class="navbar-collapse collapse d-sm-inline-flex justify-content-end"
-      >
-        <ul class="navbar-nav flex-grow">
-          <li
-            class="nav-item"
-            [routerLinkActive]="['link-active']"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/counter']"
-              >Counter</a
-            >
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/fetch-data']"
-              >Fetch data</a
-            >
-          </li>
-        </ul>
-        <app-login-menu></app-login-menu>
-      </div>
-    </div>
-  </nav>
-</header>
--->
