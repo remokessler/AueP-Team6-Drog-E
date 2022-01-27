@@ -1,10 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LoginComponent } from './login.component';
-import { ActivatedRoute, ActivatedRouteSnapshot, UrlSegment, convertToParamMap, Params, Router } from '@angular/router';
-import { of } from 'rxjs';
+import { ActivatedRoute, UrlSegment, convertToParamMap, Params, Router } from '@angular/router';
 import { LoginActions } from '../api-authorization.constants';
-import { HttpParams } from '@angular/common/http';
 import { AuthorizeService } from '../authorize.service';
 import { HomeComponent } from 'src/app/home/home.component';
 

@@ -12,7 +12,8 @@ const routes = [
   },
   {
     path: 'robots',
-    component: RobotsOverviewComponent
+    component: RobotsOverviewComponent,
+    canActivate: [AuthorizeGuard]
   },
   {
     path: 'fetch-data',

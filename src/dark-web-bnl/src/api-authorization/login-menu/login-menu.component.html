@@ -1,18 +1,21 @@
 <li class="nav-item dropdown" dropdown placement="bottom right" *ngIf="isAuthenticated | async">
-    <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle (click)="false">
-        <i class="fas fa-user"></i> &nbsp; {{ userName | async }}
-    </a>
-    <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
-        <div class="dropdown-header text-center"><strong>Benutzer</strong></div>
-        <a class="dropdown-item" [routerLink]='["/authentication/profile"]'><i class="fas fa-user"></i> Profil</a>
-        <a class="dropdown-item" [routerLink]='["/authentication/logout"]' [state]='{ local: true }'><i class="fas fa-lock"></i> Logout</a>
-    </div>
+  <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"
+     dropdownToggle (click)="false">
+    <i class="fas fa-user"></i> &nbsp; {{ userName | async }}
+  </a>
+  <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
+    <div class="dropdown-header text-center"><strong>Benutzer</strong></div>
+    <a class="dropdown-item" [routerLink]="['/authentication/profile']"><i class="fas fa-user"></i> Profil</a>
+    <a class="dropdown-item" [routerLink]="['/authentication/logout']" [state]="{ local: true }">
+      <i  class="fas fa-lock"></i> Logout</a>
+  </div>
 </li>
 <ul class="navbar-nav" *ngIf="(isAuthenticated | async) !== true">
-    <li class="nav-item">
-        <a class="nav-link text-dark" [routerLink]='["/authentication/register"]'>Register</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" [routerLink]='["/authentication/login"]'>Login</a>
-    </li>
+  <li class="nav-item">
+    <a class="nav-link text-dark" [routerLink]="['/authentication/register']">Register</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link text-dark" [routerLink]="['/authentication/login']">Login</a>
+  </li>
 </ul>
+asdfghjkl
