@@ -9,13 +9,15 @@ import { ApplicationPaths, QueryParameterNames } from './api-authorization.const
   providedIn: 'root'
 })
 export class AuthorizeGuard implements CanActivate {
-  constructor(private authorize: AuthorizeService, private router: Router) {
+  public constructor(private authorize: AuthorizeService, private router: Router) {
   }
-  canActivate(
+
+  public canActivate(
     _next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-      return this.authorize.isAuthenticated()
-        .pipe(tap(isAuthenticated => this.handleAuthorization(isAuthenticated, state)));
+    console.log('start login');
+    return this.authorize.isAuthenticated()
+      .pipe(tap(isAuthenticated => this.handleAuthorization(isAuthenticated, state)));
   }
 
   private handleAuthorization(isAuthenticated: boolean, state: RouterStateSnapshot) {

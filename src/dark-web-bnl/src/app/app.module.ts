@@ -22,7 +22,6 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { AnimationBuilder } from '@angular/animations';
 import routes from './router';
 import { RobotsOverviewComponent } from './robots/robots-overview/robots-overview.component';
 
@@ -50,7 +49,7 @@ import { RobotsOverviewComponent } from './robots/robots-overview/robots-overvie
     AppFooterModule,
     BsDropdownModule,
     ModalModule.forRoot(),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true }

@@ -8,7 +8,12 @@ const routes = [
   {
     path: '',
     component: HomeComponent,
-    pathMatch: 'full'
+    pathMatch: 'full',
+    canActivate: [AuthorizeGuard]
+  },
+  {
+    path: '**',
+    redirectTo: '/authentication/login'
   },
   {
     path: 'robots',

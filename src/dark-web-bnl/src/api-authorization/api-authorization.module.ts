@@ -30,4 +30,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
   exports: [LoginMenuComponent, LoginComponent, LogoutComponent]
 })
 export class ApiAuthorizationModule {
+  constructor() {
+    console.log('init auth module');
+  }
 }
