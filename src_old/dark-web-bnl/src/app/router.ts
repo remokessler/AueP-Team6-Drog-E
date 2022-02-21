@@ -9,12 +9,12 @@ const routes = [
     path: '',
     component: HomeComponent,
     pathMatch: 'full',
-    canActivate: [AuthorizeGuard]
+    // canActivate: [AuthorizeGuard]
   },
-  {
-    path: '**',
-    redirectTo: '/authentication/login'
-  },
+  // {
+  //   path: '**',
+  //   redirectTo: '/authentication/login'
+  // },
   {
     path: 'robots',
     component: RobotsOverviewComponent,
