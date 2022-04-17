@@ -22,7 +22,7 @@ namespace bnl_dark_api.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("bnl_dark_api.Models.ApplicationUser", b =>
+            modelBuilder.Entity("bnl_dark_api.Models.IdentityUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(50)
@@ -377,7 +377,7 @@ namespace bnl_dark_api.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("bnl_dark_api.Models.ApplicationUser", null)
+                    b.HasOne("bnl_dark_api.Models.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -386,7 +386,7 @@ namespace bnl_dark_api.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("bnl_dark_api.Models.ApplicationUser", null)
+                    b.HasOne("bnl_dark_api.Models.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -401,7 +401,7 @@ namespace bnl_dark_api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("bnl_dark_api.Models.ApplicationUser", null)
+                    b.HasOne("bnl_dark_api.Models.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -410,7 +410,7 @@ namespace bnl_dark_api.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("bnl_dark_api.Models.ApplicationUser", null)
+                    b.HasOne("bnl_dark_api.Models.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
