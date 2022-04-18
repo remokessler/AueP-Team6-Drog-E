@@ -2,7 +2,7 @@
   <ng-template pTemplate="header">
     Robots List
   </ng-template>
-  <div *ngIf="robots$ | async as robots else loading">
+  <div *ngIf="robots$ | async as robots">
     <p-table [value]="robots" dataKey="id" responsiveLayout="scroll">
       <ng-template pTemplate="header">
         <tr>

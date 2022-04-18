@@ -8,16 +8,29 @@
         <p-breadcrumb [model]="[]"></p-breadcrumb>
       </ng-template>
       <div class="p-toolbar-group-right">
-        <em (click)="openSidebar()" class="p-toolbar-separator pi pi-bars mr-2" style="cursor: pointer"
-            style="vertical-align: middle"></em>
+        <app-login-menu></app-login-menu>
+        <p-breadcrumb [home]="sidebar"></p-breadcrumb>
       </div>
     </p-toolbar>
   </nav>
 </header>
-<p-sidebar (close)="collapseSidebar()" [(visible)]="sidebarVisible" [fullScreen]="true">
+<p-sidebar (close)="collapseSidebar()" [(visible)]="sidebarVisible" [closeOnEscape]="true" [fullScreen]="true">
   <h1>Navigation</h1>
-  <a href="/">Home</a>
-  <a href="/robots/">Robots</a>
+  <div *ngFor="let route of routes">
+    <a (click)="collapseSidebar()" [routerLink]="route.url" class="card">
+      <div class="row">
+        <div class="col-md-4">
+          <em [class]="route.icon"></em>
+        </div>
+        <div class="col-md-9">
+          <div class="card-body">
+            <h5 class="card-title">{{route.title}}</h5>
+            <p class="card-text">{{route.text}}</p>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
 </p-sidebar>
 <!--<header>-->
 <!--  <nav-->

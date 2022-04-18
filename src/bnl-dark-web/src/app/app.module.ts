@@ -21,6 +21,7 @@ import { TableModule } from 'primeng/table';
 import { RobotManagementModule } from './robot-management/robot-management.module';
 import { LibModule } from '../lib/lib.module';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
     BreadcrumbModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true },
+    { provide: environment, useValue: environment }
   ],
   bootstrap: [ AppComponent ]
 })

@@ -4093,7 +4093,7 @@ p-treeselect.ng-invalid.ng-dirty > .p-treeselect {
   box-shadow: none;
 }
 .p-sidebar .p-sidebar-header {
-  padding: 1rem 1.25rem;
+  padding: 12px 12px;
 }
 .p-sidebar .p-sidebar-header .p-sidebar-close,
 .p-sidebar .p-sidebar-header .p-sidebar-icon {
@@ -4191,10 +4191,25 @@ p-treeselect.ng-invalid.ng-dirty > .p-treeselect {
 }
 
 .p-breadcrumb {
-  background: #efefef;
+  background: $secondary;
   border: 0 none;
   border-radius: 4px;
-  padding: 1rem;
+  padding: 8px;
+  ul{
+    li>a {
+      padding: 12px 16px;
+      border-radius: 4px;
+      display:flex
+    }
+    li>a:hover, li>a:focus {
+      background: lighten($secondary, 10%);
+    }
+    .p-breadcrumb-chevron:focus, .p-breadcrumb-chevron:hover {
+      background: transparent;
+    }
+  }
+
+
 }
 .p-breadcrumb ul li .p-menuitem-link {
   transition: box-shadow 0.15s;
@@ -4206,20 +4221,20 @@ p-treeselect.ng-invalid.ng-dirty > .p-treeselect {
   box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
 }
 .p-breadcrumb ul li .p-menuitem-link .p-menuitem-text {
-  color: #007bff;
+  color: white;
 }
 .p-breadcrumb ul li .p-menuitem-link .p-menuitem-icon {
-  color: #007bff;
+  color: white;
 }
 .p-breadcrumb ul li.p-breadcrumb-chevron {
   margin: 0 0.5rem 0 0.5rem;
-  color: #6c757d;
+  color: white;
 }
 .p-breadcrumb ul li:last-child .p-menuitem-text {
-  color: #6c757d;
+  color: white;
 }
 .p-breadcrumb ul li:last-child .p-menuitem-icon {
-  color: #6c757d;
+  color: white;
 }
 
 .p-contextmenu {

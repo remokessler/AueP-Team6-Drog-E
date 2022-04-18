@@ -1,4 +1,4 @@
-﻿using bnl_dark_api.Data;
+﻿using bnl_dark_api.DataBase;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Deltas;
 using Microsoft.AspNetCore.OData.Formatter;
@@ -24,7 +24,7 @@ public class DefaultCrudController<T>: ODataController where T : class, IId
     
     [EnableQuery]
     [HttpGet]
-    public virtual async Task<ActionResult<T[]>> Get()
+    public virtual async Task<ActionResult<IEnumerable<T>>> Get()
     {
         _logger.LogTrace($"{nameof(T)}.GET: all");
         return Ok(await _dbSet.ToListAsync());

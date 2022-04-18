@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
+﻿using bnl_dark_api.Models;
+using Duende.IdentityServer.EntityFramework.Options;
+using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using Duende.IdentityServer.EntityFramework.Options;
-using bnl_dark_api.Models;
-using Microsoft.AspNetCore.Identity;
 
-namespace bnl_dark_api.Data;
+namespace bnl_dark_api.DataBase;
 
 public class ApplicationDbContext : ApiAuthorizationDbContext<IdentityUser>
 {
@@ -14,5 +14,5 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<IdentityUser>
     {
     }
     
-    public DbSet<Robot> Robots { get; set; }
+    public DbSet<Robot>? Robots { get; set; } 
 }

@@ -1,20 +1,24 @@
-import { RobotState } from '../models/robot-state';
 import { IRobot } from '../models/robot';
-import { Observable, of } from 'rxjs';
-import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Inject, Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { debounceTime } from 'rxjs/operators';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class RobotService {
 
-  public constructor() {
+  public constructor(private readonly _httpClient: HttpClient, @Inject('BASE_URL') private readonly _baseUrl: string) {
   }
 
   public get(): Observable<IRobot[]> {
-    return of([
-      { id: 1, state: RobotState.Running, location: 'ZbW', name: 'Drog-E' } as IRobot
-    ]);
+    return this._httpClient.get<IRobot[]>(this._baseUrl +'data/Robots');
+
+    // return of([
+    //   { id: 1, state: RobotState.Running, location: 'ZbW', name: 'Drog-E' } as IRobot
+    // ]);
   }
 
 }
