@@ -1,0 +1,28 @@
+@import "bootstrap/scss/functions";
+
+$primary: #ff4900 !default;
+$secondary: #144382 !default;
+$success: #58a000 !default;
+$info: #f71492 !default;
+$warning: #ffd200 !default;
+$danger: #ff0033 !default;
+$light: #eeeeee !default;
+$dark: #343434 !default;
+$theme-colors: (
+  primary: #ff4900,
+  secondary: #144382,
+  success: #58a000,
+  info: #f71492,
+  warning: #ffd200,
+  danger: #ff0033,
+  light: $light,
+  dark: $dark
+);
+$bs-primary-rgb: rgb(255, 73, 0) !default;
+$bs-secondary-rgb: rgb(20, 67, 130) !default;
+$bs-success-rgb: rgb(88, 160, 0) !default;
+$bs-info-rgb: rgb(247, 20, 146) !default;
+$bs-warning-rgb: rgb(255, 210, 0) !default;
+$bs-danger-rgb: rgb(255, 0, 51) !default;
+$bs-light-rgb: rgb(238, 238, 238) !default;
+$bs-dark-rgb: rgb(52, 52, 52) !default;

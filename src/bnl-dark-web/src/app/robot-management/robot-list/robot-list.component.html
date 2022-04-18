@@ -1,0 +1,29 @@
+<p-card>
+  <ng-template pTemplate="header">
+    Robots List
+  </ng-template>
+  <div *ngIf="robots$ | async as robots">
+    <p-table [value]="robots" dataKey="id" responsiveLayout="scroll">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Location</th>
+          <th>State</th>
+        </tr>
+      </ng-template>
+      <ng-template let-robot pTemplate="body">
+        <tr>
+          <td>{{robot.id}}</td>
+          <td>{{robot.name}}</td>
+          <td>{{robot.location}}</td>
+          <td>{{robot.state}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  <ng-template #loading>
+    Loading...
+  </ng-template>
+</p-card>
+

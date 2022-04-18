@@ -1,45 +1,79 @@
 <header>
-  <nav
-    class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
-  >
-    <div class="container">
-      <a class="navbar-brand" [routerLink]="['/']">bnl_dark_api</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target=".navbar-collapse"
-        aria-label="Toggle navigation"
-        [attr.aria-expanded]="isExpanded"
-        (click)="toggle()"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div
-        class="navbar-collapse collapse d-sm-inline-flex justify-content-end"
-        [ngClass]="{ show: isExpanded }"
-      >
-        <ul class="navbar-nav flex-grow">
-          <li
-            class="nav-item"
-            [routerLinkActive]="['link-active']"
-            [routerLinkActiveOptions]="{ exact: true }"
-          >
-            <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/counter']"
-              >Counter</a
-            >
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/fetch-data']"
-              >Fetch data</a
-            >
-          </li>
-        </ul>
-        <app-login-menu></app-login-menu>
+  <nav>
+    <p-toolbar [classList]="['toolbar']">
+      <div *ngIf="breadcrumbs$ | async as breadcrumbs else loadingSidebar" class="p-toolbar-group-left">
+        <p-breadcrumb [home]="home" [model]="breadcrumbs"></p-breadcrumb>
       </div>
-    </div>
+      <ng-template #loadingSidebar>
+        <p-breadcrumb [model]="[]"></p-breadcrumb>
+      </ng-template>
+      <div class="p-toolbar-group-right">
+        <app-login-menu></app-login-menu>
+        <p-breadcrumb [home]="sidebar"></p-breadcrumb>
+      </div>
+    </p-toolbar>
   </nav>
 </header>
+<p-sidebar (close)="collapseSidebar()" [(visible)]="sidebarVisible" [closeOnEscape]="true" [fullScreen]="true">
+  <h1>Navigation</h1>
+  <div *ngFor="let route of routes">
+    <a (click)="collapseSidebar()" [routerLink]="route.url" class="card">
+      <div class="row">
+        <div class="col-md-4">
+          <em [class]="route.icon"></em>
+        </div>
+        <div class="col-md-9">
+          <div class="card-body">
+            <h5 class="card-title">{{route.title}}</h5>
+            <p class="card-text">{{route.text}}</p>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+</p-sidebar>
+<!--<header>-->
+<!--  <nav-->
+<!--    class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"-->
+<!--  >-->
+<!--    <div class="container">-->
+<!--      <a class="navbar-brand" [routerLink]="['/']">bnl_dark_api</a>-->
+<!--      <button-->
+<!--        class="navbar-toggler"-->
+<!--        type="button"-->
+<!--        data-toggle="collapse"-->
+<!--        data-target=".navbar-collapse"-->
+<!--        aria-label="Toggle navigation"-->
+<!--        [attr.aria-expanded]="isExpanded"-->
+<!--        (click)="toggle()"-->
+<!--      >-->
+<!--        <span class="navbar-toggler-icon"></span>-->
+<!--      </button>-->
+<!--      <div-->
+<!--        class="navbar-collapse collapse d-sm-inline-flex justify-content-end"-->
+<!--        [ngClass]="{ show: isExpanded }"-->
+<!--      >-->
+<!--        <ul class="navbar-nav flex-grow">-->
+<!--          <li-->
+<!--            class="nav-item"-->
+<!--            [routerLinkActive]="['link-active']"-->
+<!--            [routerLinkActiveOptions]="{ exact: true }"-->
+<!--          >-->
+<!--            <a class="nav-link text-dark" [routerLink]="['/']">Home</a>-->
+<!--          </li>-->
+<!--          <li class="nav-item" [routerLinkActive]="['link-active']">-->
+<!--            <a class="nav-link text-dark" [routerLink]="['/counter']"-->
+<!--              >Counter</a-->
+<!--            >-->
+<!--          </li>-->
+<!--          <li class="nav-item" [routerLinkActive]="['link-active']">-->
+<!--            <a class="nav-link text-dark" [routerLink]="['/fetch-data']"-->
+<!--              >Fetch data</a-->
+<!--            >-->
+<!--          </li>-->
+<!--        </ul>-->
+<!--        <app-login-menu></app-login-menu>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </nav>-->
+<!--</header>-->

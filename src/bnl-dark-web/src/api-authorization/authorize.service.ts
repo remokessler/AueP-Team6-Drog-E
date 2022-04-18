@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { User, UserManager } from 'oidc-client';
 import { BehaviorSubject, concat, from, Observable } from 'rxjs';
 import { filter, map, mergeMap, take, tap } from 'rxjs/operators';
-import { ApplicationPaths, ApplicationName } from './api-authorization.constants';
+import { ApplicationName, ApplicationPaths } from './api-authorization.constants';
 
 export type IAuthenticationResult =
   SuccessAuthenticationResult |
@@ -82,7 +82,7 @@ export class AuthorizeService {
 
       try {
         if (this.popUpDisabled) {
-          throw new Error('Popup disabled. Change \'authorize.service.ts:AuthorizeService.popupDisabled\' to false to enable it.');
+          throw new Error('Popup disabled. Change \'authorize.services.ts:AuthorizeService.popupDisabled\' to false to enable it.');
         }
         user = await this.userManager!.signinPopup(this.createArguments());
         this.userSubject.next(user.profile);
@@ -122,7 +122,7 @@ export class AuthorizeService {
   public async signOut(state: any): Promise<IAuthenticationResult> {
     try {
       if (this.popUpDisabled) {
-        throw new Error('Popup disabled. Change \'authorize.service.ts:AuthorizeService.popupDisabled\' to false to enable it.');
+        throw new Error('Popup disabled. Change \'authorize.services.ts:AuthorizeService.popupDisabled\' to false to enable it.');
       }
 
       await this.ensureUserManagerInitialized();
@@ -148,7 +148,7 @@ export class AuthorizeService {
       this.userSubject.next(null);
       return this.success(response && response.state);
     } catch (error) {
-      console.log(`There was an error trying to log out '${error}'.`);
+      console.log(`There was an error trying to log out '${ error }'.`);
       return this.error(error);
     }
   }
@@ -176,7 +176,7 @@ export class AuthorizeService {
 
     const response = await fetch(ApplicationPaths.ApiAuthorizationClientConfigurationUrl);
     if (!response.ok) {
-      throw new Error(`Could not load settings for '${ApplicationName}'`);
+      throw new Error(`Could not load settings for '${ ApplicationName }'`);
     }
 
     const settings: any = await response.json();

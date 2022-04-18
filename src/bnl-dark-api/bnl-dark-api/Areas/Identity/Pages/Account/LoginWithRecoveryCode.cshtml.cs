@@ -15,13 +15,13 @@ namespace bnl_dark_api.Areas.Identity.Pages.Account
 {
     public class LoginWithRecoveryCodeModel : PageModel
     {
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<LoginWithRecoveryCodeModel> _logger;
 
         public LoginWithRecoveryCodeModel(
-            SignInManager<ApplicationUser> signInManager,
-            UserManager<ApplicationUser> userManager,
+            SignInManager<IdentityUser> signInManager,
+            UserManager<IdentityUser> userManager,
             ILogger<LoginWithRecoveryCodeModel> logger)
         {
             _signInManager = signInManager;
