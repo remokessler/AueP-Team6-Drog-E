@@ -14,5 +14,5 @@ public class ApplicationDbContext : ApiAuthorizationDbContext<IdentityUser>
     {
     }
     
-    public DbSet<Robot>? Robots { get; set; } 
+    public DbSet<Robot>? Robots { get; set; }
 }

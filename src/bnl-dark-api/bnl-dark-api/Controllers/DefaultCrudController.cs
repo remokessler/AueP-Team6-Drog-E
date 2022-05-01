@@ -39,6 +39,7 @@ public class DefaultCrudController<T>: ODataController where T : class, IId
         return Ok(await result.FirstOrDefaultAsync());
     }
     
+    [EnableQuery]
     [HttpPost]
     public virtual async Task<ActionResult<T>> Post(T newObject)
     {
@@ -49,9 +50,10 @@ public class DefaultCrudController<T>: ODataController where T : class, IId
         }
         _dbSet.Add(newObject);
         await _context.SaveChangesAsync();
-        return Created(newObject);
+        return Ok(newObject);
     }
     
+    [EnableQuery]
     [HttpPatch]
     public virtual async Task<ActionResult<T>> Patch([FromODataUri] int key, Delta<T> delta)
     {
@@ -77,6 +79,7 @@ public class DefaultCrudController<T>: ODataController where T : class, IId
         return Updated(robot);
     }
     
+    [EnableQuery]
     [HttpPut]
     public virtual async Task<ActionResult<T>> Put([FromODataUri] int key, T updatedObject)
     {

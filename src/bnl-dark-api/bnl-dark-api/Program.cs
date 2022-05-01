@@ -15,6 +15,18 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+builder.Services.AddControllers()
+    .AddOData(opt =>
+        opt.AddRouteComponents("odata", GetEdmModel())
+            .Expand()
+            .Filter()
+            .Count()
+            .Select()
+            .OrderBy()
+            .SkipToken()
+            .EnableQueryFeatures(100)
+    );
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: "development", builder =>
@@ -52,9 +64,6 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.SlidingExpiration = true;
 });
 
-// builder.Services.AddControllers().AddOData(opt => opt.AddRouteComponents("odata", GetEdmModel()));
-builder.Services.AddControllers().AddOData(opt =>
-    opt.AddRouteComponents("odata", GetEdmModel()).Expand().Filter().Count().Select().OrderBy().SkipToken().EnableQueryFeatures(100));
 
 builder.Services.AddSwaggerGen();
 var app = builder.Build();

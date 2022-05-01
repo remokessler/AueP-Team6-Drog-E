@@ -1,6 +1,4 @@
-﻿using Microsoft.OData.Edm;
-
-namespace bnl_dark_api.Models;
+﻿namespace bnl_dark_api.Models;
 
 public class Robot : IRobot, IId
 {
