@@ -8,7 +8,11 @@
 header {
   display: flex;
   top: 0;
-  position: fixed;
+  position: sticky;
+  z-index: 10000;
+  height: 56px;
+  overflow: hidden;
+
   >nav {
     width: 100%;
   }

@@ -1,28 +1,35 @@
 <p-card>
-  <ng-template pTemplate="header">
-  </ng-template>
-  <div class="row justify-content-end" style="margin-bottom: 4px">
-    <div class="col col-auto">
-      <button (click)="openDialog()" class="p-button-text" icon="pi pi-check" iconPos="left" label="New Robot"
-              pButton></button>
-    </div>
-  </div>
-
   <div *ngIf="robots$ | async as robots; else loading" class="row">
-    <p-table (sortFunction)="sort($event)" [customSort]="true" [value]="robots" class="col-12" dataKey="id"
+    <p-table (onSort)="sort($event)" [sortField]="sortField"
+             [sortOrder]="sortOrder" [value]="robots" class="col-12" dataKey="id"
              selectionMode="single" styleClass="p-datatable-striped">
+      <ng-template pTemplate="caption">
+        <div class="table-actions row justify-content-between" style="margin-bottom: 4px">
+          <div class="col col-auto">
+            <button (click)="openDialog()" class="p-button-text" icon="pi pi-check" iconPos="left" label="New Robot"
+                    pButton></button>
+          </div>
+          <div class="col">
+            <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+              <!--            (input)=""-->
+                <input pInputText placeholder="Search keyword" type="text"/>
+            </span>
+          </div>
+        </div>
+      </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th pSortableColumn="ID">ID
+          <th pSortableColumn="ID" style="display:table-cell!important">ID
             <p-sortIcon field="ID"></p-sortIcon>
           </th>
-          <th pSortableColumn="Name">Name
+          <th pSortableColumn="Name" style="display:table-cell!important">Name
             <p-sortIcon field="Name"></p-sortIcon>
           </th>
-          <th pSortableColumn="Location">Location
+          <th pSortableColumn="Location" style="display:table-cell!important">Location
             <p-sortIcon field="Location"></p-sortIcon>
           </th>
-          <th pSortableColumn="State">State
+          <th pSortableColumn="State" style="display:table-cell!important">State
             <p-sortIcon field="State"></p-sortIcon>
           </th>
         </tr>
@@ -77,7 +84,11 @@
   </ng-template>
 </p-card>
 
-<p-dialog [breakpoints]="{'960px': '75vw', '640px': '100vw'}" [modal]="true" [style]="{width: '50vw'}"
+<p-dialog (visibleChange)="closeDialog()"
+          [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
+          [closeOnEscape]="true"
+          [modal]="true"
+          [style]="{width: '50vw'}"
           [visible]="showDialog$ | async"
           header="New Robot">
   <form>

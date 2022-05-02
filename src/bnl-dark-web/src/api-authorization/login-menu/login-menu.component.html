@@ -1,16 +1,20 @@
-<ul class="navbar-nav" *ngIf="isAuthenticated | async">
-    <li class="nav-item">
-        <a  class="nav-link text-dark" [routerLink]='["/authentication/profile"]' title="Manage">Hello {{ userName | async }}</a>
+<div *ngIf="(isAuthenticated | async) === true" class="p-breadcrumb p-component">
+  <ul>
+    <li>
+      <a class="p-element p-menuitem-link ng-star-inserted"  [routerLink]='["/authentication/profile"]' title="Manage">Hello {{ userName | async }}</a>
     </li>
-    <li class="nav-item">
-        <a  class="nav-link text-dark" [routerLink]='["/authentication/logout"]' [state]='{ local: true }' title="Logout">Logout</a>
+    <li>
+      <a class="p-element p-menuitem-link ng-star-inserted"  [routerLink]='["/authentication/logout"]' [state]='{ local: true }' title="Logout">Logout</a>
     </li>
-</ul>
-<ul class="navbar-nav" *ngIf="(isAuthenticated | async) !== true">
-  <li class="nav-item">
-        <a class="nav-link text-dark" [routerLink]='["/authentication/register"]'>Register</a>
+  </ul>
+</div>
+<div *ngIf="(isAuthenticated | async) !== true" class="p-breadcrumb p-component">
+  <ul>
+    <li>
+      <a class="p-element p-menuitem-link ng-star-inserted"  [routerLink]='["/authentication/register"]' class="p-element p-menuitem-link ng-star-inserted">Register</a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" [routerLink]='["/authentication/login"]'>Login</a>
+    <li>
+      <a class="p-element p-menuitem-link ng-star-inserted"  [routerLink]='["/authentication/login"]' class="p-element p-menuitem-link ng-star-inserted">Login</a>
     </li>
-</ul>
+  </ul>
+</div>

@@ -1,9 +1,56 @@
 :host ::ng-deep .p-datatable .p-datatable-thead > tr > th {
   position: -webkit-sticky;
   position: sticky;
-  top: 5px;
+  top: 104px;
+  z-index: 100;
+  *:not(p-sorticon) {
+    display: table-cell !important;
+  }
+}
+
+:host ::ng-deep .p-datatable .p-datatable-header {
+  width: 100%;
+  overflow: hidden;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 56px;
+  z-index: 101;
+  background: white;
+  display: flex;
+  .table-actions {
+    width: 100%;
+    margin: 4px;
+    > .col {
+      padding: 0;
+      >span {
+        width: 100%;
+        >input {
+          border-color: white;
+          transition: border-color 0.5s;
+          &:hover, &:focus, &:active {
+            border-color: #ced4da;
+          }
+        }
+      }
+    }
+  }
 }
 
 .layout-news-active :host ::ng-deep .p-datatable tr > th {
   top: 7rem;
+}
+
+tr:hover, tr:focus, tr:active {
+  >:not(th) {
+    text-decoration: underline !important;
+    text-decoration-color: #ff4900 !important;
+  }
+}
+
+td {
+  display: table-cell !important;
+}
+
+.p-datatable-thead > tr > th {
+  display: table-cell !important;
 }

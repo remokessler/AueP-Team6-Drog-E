@@ -3,7 +3,7 @@ import { RobotService } from '../services/robot.service';
 import { BreadcrumbService } from '../../../lib/services/breadcrumb.service';
 import { IRobot } from '../models/robot';
 import { take } from 'rxjs/operators';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, timer } from 'rxjs';
 import { QueryBuilder } from 'odata-query-builder';
 
 @Component({
@@ -15,6 +15,9 @@ import { QueryBuilder } from 'odata-query-builder';
 export class RobotListComponent {
   public robots$ = this._robotService.get();
   public dialogRobot = {} as IRobot;
+  public sortField = '';
+  public sortOrder = 0;
+  public clear: any;
   private showDialogSubject$ = new BehaviorSubject<boolean>(false);
 
   public constructor(private readonly _robotService: RobotService, private readonly _breadcrumbService: BreadcrumbService) {
@@ -23,6 +26,12 @@ export class RobotListComponent {
 
   public get showDialog$(): Observable<boolean> {
     return this.showDialogSubject$.asObservable();
+  }
+
+  private get _oDataQuery(): string {
+    return new QueryBuilder()
+      .orderBy(`${ this.sortField } ${ this.sortOrder === -1 ? 'desc' : '' }`)
+      .toQuery();
   }
 
   public openDialog(robot: IRobot | undefined = undefined) {
@@ -48,15 +57,15 @@ export class RobotListComponent {
   }
 
   public sort($event: { field: string, order: number }): void {
-    let query = new QueryBuilder()
-      .orderBy($event.field)
-      .toQuery();
-
-    if ($event.order === -1) {
-      query = new QueryBuilder()
-        .orderBy(`${ $event.field } desc`)
-        .toQuery();
+    if(this.sortField === $event.field && this.sortOrder === $event.order) {
+      return;
     }
-    this.robots$ = this._robotService.get(query);
+    this.sortField = $event.field;
+    this.sortOrder = $event.order;
+    this.loadRobots();
+  }
+
+  private loadRobots(): void {
+    this.robots$ = this._robotService.get(this._oDataQuery);
   }
 }

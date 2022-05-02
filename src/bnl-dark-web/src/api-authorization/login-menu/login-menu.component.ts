@@ -6,15 +6,16 @@ import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-login-menu',
   templateUrl: './login-menu.component.html',
-  styleUrls: ['./login-menu.component.css']
+  styleUrls: [ './login-menu.component.scss' ]
 })
 export class LoginMenuComponent implements OnInit {
   public isAuthenticated?: Observable<boolean>;
   public userName?: Observable<string | null | undefined>;
 
-  constructor(private authorizeService: AuthorizeService) { }
+  public constructor(private authorizeService: AuthorizeService) {
+  }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.isAuthenticated = this.authorizeService.isAuthenticated();
     this.userName = this.authorizeService.getUser().pipe(map(u => u && u.name));
   }
