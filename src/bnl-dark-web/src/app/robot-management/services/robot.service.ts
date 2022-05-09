@@ -1,8 +1,8 @@
-import { IRobot } from '../models/robot';
-import { Observable } from 'rxjs';
+import { IRobot, RobotState } from '../models/robot';
+import { Observable, Subject } from 'rxjs';
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { RobotState } from '../models/robot';
+import { take } from 'rxjs/operators';
 
 
 @Injectable({
@@ -14,11 +14,7 @@ export class RobotService {
   }
 
   public get(odataQueryString: string | undefined = undefined): Observable<IRobot[]> {
-    console.log(odataQueryString);
-    if (odataQueryString) {
-      return this._httpClient.get<IRobot[]>(this._baseUrl +'odata/Robots' + odataQueryString);
-    }
-    return this._httpClient.get<IRobot[]>(this._baseUrl +'odata/Robots');
+      return this._httpClient.get<IRobot[]>(this._baseUrl + 'odata/Robots' + (odataQueryString ?? ''));
   }
 
   public post(robot: IRobot): Observable<IRobot> {
@@ -27,7 +23,7 @@ export class RobotService {
       location: 'New',
       state: RobotState.Idle
     }
-    return this._httpClient.post<IRobot>(this._baseUrl +'odata/Robots',
+    return this._httpClient.post<IRobot>(this._baseUrl + 'odata/Robots',
       robot
     );
   }

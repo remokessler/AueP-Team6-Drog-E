@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { RobotService } from '../services/robot.service';
 import { BreadcrumbService } from '../../../lib/services/breadcrumb.service';
 import { IRobot } from '../models/robot';
-import { take } from 'rxjs/operators';
-import { BehaviorSubject, Observable, timer } from 'rxjs';
+import { debounceTime, distinctUntilChanged, take, tap, timeout } from 'rxjs/operators';
+import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
 import { QueryBuilder } from 'odata-query-builder';
 
 @Component({
@@ -17,36 +17,56 @@ export class RobotListComponent {
   public dialogRobot = {} as IRobot;
   public sortField = '';
   public sortOrder = 0;
-  public clear: any;
-  private showDialogSubject$ = new BehaviorSubject<boolean>(false);
+  public filter = '';
+  public filterModelChanged = new Subject<string>();
+  private _filterModelChangedSubscription: Subscription;
+  private _showDialogSubject$ = new BehaviorSubject<boolean>(false);
 
-  public constructor(private readonly _robotService: RobotService, private readonly _breadcrumbService: BreadcrumbService) {
+  @ViewChild('searchField')
+  public searchField: ElementRef | undefined;
+
+  public constructor(private readonly _robotService: RobotService, private readonly _breadcrumbService: BreadcrumbService, private readonly _cdr: ChangeDetectorRef) {
     this._breadcrumbService.setBreadcrumb([ { label: 'Robots' } ]);
+    this._filterModelChangedSubscription = this.filterModelChanged.pipe(
+      tap((text) => {
+        this.filter = text;
+      }),
+      debounceTime(500),
+      distinctUntilChanged()
+    ).subscribe(() => {
+      this.loadRobots();
+      setTimeout(() => this.searchField?.nativeElement.focus(), 100);
+    });
   }
 
   public get showDialog$(): Observable<boolean> {
-    return this.showDialogSubject$.asObservable();
+    return this._showDialogSubject$.asObservable();
   }
 
   private get _oDataQuery(): string {
-    return new QueryBuilder()
-      .orderBy(`${ this.sortField } ${ this.sortOrder === -1 ? 'desc' : '' }`)
-      .toQuery();
+    let query = new QueryBuilder();
+    if (this.sortField) {
+      query = query.orderBy(`${ this.sortField } ${ this.sortOrder === -1 ? 'desc' : '' }`);
+    }
+    if (this.filter) {
+      query = query.filter((builder) => builder.filterPhrase(`contains(name, '${ this.filter }')`));
+    }
+    return query.toQuery();
   }
 
   public openDialog(robot: IRobot | undefined = undefined) {
     this.dialogRobot = robot ?? {} as IRobot;
-    this.showDialogSubject$.next(true);
+    this._showDialogSubject$.next(true);
   }
 
   public closeDialog() {
     this.dialogRobot = {} as IRobot;
-    this.showDialogSubject$.next(false);
+    this._showDialogSubject$.next(false);
   }
 
   public createRobot(): void {
     this._robotService.post(this.dialogRobot).pipe(take(1)).subscribe(robot => {
-      this.robots$ = this._robotService.get();
+      this.loadRobots();
       this.closeDialog();
     });
   }
@@ -57,7 +77,7 @@ export class RobotListComponent {
   }
 
   public sort($event: { field: string, order: number }): void {
-    if(this.sortField === $event.field && this.sortOrder === $event.order) {
+    if (this.sortField === $event.field && this.sortOrder === $event.order) {
       return;
     }
     this.sortField = $event.field;
@@ -67,5 +87,6 @@ export class RobotListComponent {
 
   private loadRobots(): void {
     this.robots$ = this._robotService.get(this._oDataQuery);
+    this._cdr.detectChanges();
   }
 }

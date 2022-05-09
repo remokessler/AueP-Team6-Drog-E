@@ -6,14 +6,16 @@
       <ng-template pTemplate="caption">
         <div class="table-actions row justify-content-between" style="margin-bottom: 4px">
           <div class="col col-auto">
-            <button (click)="openDialog()" class="p-button-text" icon="pi pi-check" iconPos="left" label="New Robot"
-                    pButton></button>
+            <button (click)="openDialog()" class="p-button-text" icon="pi pi-check" iconPos="left"
+                    label="New Robot" pButton
+                    style="margin-right: 8px"></button>
           </div>
           <div class="col">
             <span class="p-input-icon-left">
                 <i class="pi pi-search"></i>
-              <!--            (input)=""-->
-                <input pInputText placeholder="Search keyword" type="text"/>
+                <input #searchField (ngModelChange)="filterModelChanged.next($event)" [ngModel]="filter" pInputText
+                       placeholder="Search keyword"
+                       type="text"/>
             </span>
           </div>
         </div>
