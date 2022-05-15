@@ -1,0 +1,19 @@
+<p-dialog (visibleChange)="close()"
+          [breakpoints]="{'960px': '75vw', '640px': '100vw'}"
+          [closeOnEscape]="true"
+          [modal]="true"
+          [style]="{width: '50vw'}"
+          [visible]="showDialog"
+          header="{{dialogTitle}}">
+  <ng-content></ng-content>
+  <ng-template *ngif="hideFooter !== true" pTemplate="footer">
+    <div class="row justify-content-between">
+      <div class="col col-auto">
+        <button (click)="close()" class="p-button-text" label="Cancel" pButton></button>
+      </div>
+      <div class="col col-auto">
+        <button (click)="submit()" label="{{submitText}}" pButton></button>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>

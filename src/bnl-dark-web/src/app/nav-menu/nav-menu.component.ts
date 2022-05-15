@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { BreadcrumbService } from '../../lib/services/breadcrumb.service';
 import { MenuItem } from 'primeng/api';
+import { AuthService } from '../user-management/services/auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-nav-menu',
@@ -19,12 +21,22 @@ export class NavMenuComponent {
     icon: 'pi pi-bars',
     command: this.openSidebar.bind(this)
   } as MenuItem;
+
   public routes = [
     { icon: 'pi pi-home', title: 'Home', text: 'Home Sweet Home', url: '/' },
     { icon: 'pi pi-robot', title: 'Robots', text: 'Manage all your Robots here', url: '/robots' }
   ] as { icon: string, title: string, text: string, url: string }[];
+  public userPopupVisible = false;
 
-  public constructor(private readonly _breadcrumbService: BreadcrumbService) {
+  public constructor(private readonly _breadcrumbService: BreadcrumbService, private readonly _authService: AuthService) {
+  }
+
+  public get isAuthenticated(): Observable<boolean> {
+    return this._authService.userLoggedIn;
+  }
+
+  public get userName(): Observable<string> {
+    return this._authService.userEmail;
   }
 
   public get breadcrumbs$() {
@@ -37,5 +49,13 @@ export class NavMenuComponent {
 
   public collapseSidebar() {
     this.sidebarVisible = false;
+  }
+
+  public showUserPopUp(): void {
+    this.userPopupVisible = true;
+  }
+
+  public closeUserPopUp(): void {
+    this.userPopupVisible = false;
   }
 }

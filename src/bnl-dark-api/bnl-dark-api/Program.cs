@@ -1,9 +1,10 @@
+using System.Text;
 using bnl_dark_api.DataBase;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using bnl_dark_api.Models;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.OData;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OData.Edm;
 using Microsoft.OData.ModelBuilder;
 
@@ -38,32 +39,23 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
-
-builder.Services.AddIdentityServer()
-    .AddApiAuthorization<IdentityUser, ApplicationDbContext>();
-
-builder.Services.AddAuthentication()
-    .AddIdentityServerJwt();
-
-builder.Services.AddControllersWithViews();
-
-builder.Services.AddControllersWithViews();
-builder.Services.AddRazorPages();
-
-
-builder.Services.ConfigureApplicationCookie(options =>
-{
-    // Cookie settings
-    options.Cookie.HttpOnly = true;
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
- 
-    options.LoginPath = "/Identity/Account/Login";
-    options.AccessDeniedPath = "/Identity/Account/AccessDenied";
-    options.SlidingExpiration = true;
-});
-
+builder.Services.AddAuthentication(opt => {
+        opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = false,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = "https://localhost:44456",
+            ValidAudience = "https://localhost:44456",
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("drog-e@supersecret"))
+        };
+    });
 
 builder.Services.AddSwaggerGen();
 var app = builder.Build();
@@ -89,13 +81,11 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseCors("development");
 app.UseAuthentication();
-app.UseIdentityServer();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
-app.MapRazorPages();
 
 app.MapFallbackToFile("index.html"); ;
 

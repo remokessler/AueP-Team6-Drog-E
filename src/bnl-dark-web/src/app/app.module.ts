@@ -1,16 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
-import { ApiAuthorizationModule } from 'src/api-authorization/api-authorization.module';
-import { AuthorizeInterceptor } from 'src/api-authorization/authorize.interceptor';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ButtonModule } from 'primeng/button';
 import { SidebarModule } from 'primeng/sidebar';
@@ -22,20 +17,25 @@ import { RobotManagementModule } from './robot-management/robot-management.modul
 import { LibModule } from '../lib/lib.module';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { environment } from '../environments/environment';
+import { JwtModule } from '@auth0/angular-jwt';
+import { AuthGuard } from './user-management/guards/auth-guard.guard';
+import { UserManagementModule } from './user-management/user-management.module';
+import { CardModule } from 'primeng/card';
+import { SplitButtonModule } from 'primeng/splitbutton';
+
+export function tokenGetter() {
+  return localStorage.getItem('jwt');
+}
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    CounterComponent,
-    FetchDataComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
-    FormsModule,
-    ApiAuthorizationModule,
     RouterModule.forRoot(routes),
     ToolbarModule,
     ButtonModule,
@@ -45,13 +45,26 @@ import { environment } from '../environments/environment';
     TableModule,
     RobotManagementModule,
     LibModule,
-    BreadcrumbModule
+    BreadcrumbModule,
+    FormsModule,
+    ReactiveFormsModule,
+    UserManagementModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: [ 'localhost:44456' ],
+        disallowedRoutes: []
+      }
+    }),
+    CardModule,
+    SplitButtonModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true },
-    { provide: environment, useValue: environment }
+    // { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true },
+    { provide: environment, useValue: environment },
+    AuthGuard
   ],
-  bootstrap: [ AppComponent ]
+  bootstrap: [ AppComponent ],
 })
 export class AppModule {
 }

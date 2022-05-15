@@ -12,6 +12,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { SkeletonModule } from 'primeng/skeleton';
+import { LibModule } from '../../lib/lib.module';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { SkeletonModule } from 'primeng/skeleton';
     DialogModule,
     InputTextModule,
     SkeletonModule,
+    LibModule,
   ],
   providers: [
     RobotService
