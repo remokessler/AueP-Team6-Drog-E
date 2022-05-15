@@ -14,7 +14,7 @@
               <i class="pi pi-search"></i>
               <input #searchField (ngModelChange)="filterModelChanged.next($event)" [ngModel]="filter" pInputText
                      placeholder="Search keyword"
-                     type="text"/>
+                     type="text" />
           </span>
         </div>
       </div>
@@ -51,16 +51,16 @@
            styleClass="p-datatable-striped">
     <ng-template pTemplate="header">
       <tr>
-        <th pSortableColumn="ID">ID
+        <th pSortableColumn="ID">
           <p-sortIcon field="ID"></p-sortIcon>
         </th>
-        <th pSortableColumn="Name">Name
+        <th pSortableColumn="Name">
           <p-sortIcon field="Name"></p-sortIcon>
         </th>
-        <th pSortableColumn="Location">Location
+        <th pSortableColumn="Location">
           <p-sortIcon field="Location"></p-sortIcon>
         </th>
-        <th pSortableColumn="State">State
+        <th pSortableColumn="State">
           <p-sortIcon field="State"></p-sortIcon>
         </th>
       </tr>
@@ -84,7 +84,8 @@
   </p-table>
 </ng-template>
 
-<dialog (onDialogClosed)="closeDialog()" (onDialogSubmitted)="createRobot()" [showDialog]="(showDialog$ | async) === true"
+<dialog (onDialogClosed)="closeDialog()" [hideFooter]="false" (onDialogSubmitted)="createRobot()"
+        [showDialog]="(showDialog$ | async) === true"
         dialogTitle="New Robot" submitText="Create Robot">
   <form>
       <span class="p-float-label">

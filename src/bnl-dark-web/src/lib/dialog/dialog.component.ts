@@ -20,9 +20,7 @@ export class DialogComponent {
 
   @Output()
   public onDialogSubmitted = new EventEmitter();
-  constructor() {
-    console.log('dialog created', this.showDialog);
-  }
+
   public close(): void {
     this.showDialog = false;
     this.onDialogClosed.emit();

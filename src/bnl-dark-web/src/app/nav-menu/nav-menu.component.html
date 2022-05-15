@@ -11,16 +11,13 @@
         <div *ngIf="(isAuthenticated | async) === true" class="p-breadcrumb p-component">
           <ul>
             <li>
-              <a (click)="showUserPopUp()" [routerLink]='["/"]' class="p-element p-menuitem-link ng-star-inserted"
-                      title="Manage">Hello {{(userName | async)}}</a>
+              <a (click)="showUserPopUp()" class="p-element p-menuitem-link ng-star-inserted"
+                 title="Manage">Hello {{(userName | async)}}</a>
             </li>
           </ul>
         </div>
         <div *ngIf="(isAuthenticated | async) !== true" class="p-breadcrumb p-component">
           <ul>
-            <li>
-              <a [routerLink]='["/register"]' class="p-element p-menuitem-link ng-star-inserted">Register</a>
-            </li>
             <li>
               <a [routerLink]='["/login"]' class="p-element p-menuitem-link ng-star-inserted">Login</a>
             </li>
@@ -31,22 +28,17 @@
     </p-toolbar>
   </nav>
 </header>
-<user-popup [showDialog]="userPopupVisible" (onDialogClosed)="closeUserPopUp()"></user-popup>
-<p-sidebar (close)="collapseSidebar()" [(visible)]="sidebarVisible" [closeOnEscape]="true" [fullScreen]="true">
-  <h1>Navigation</h1>
-  <div *ngFor="let route of routes">
-    <a (click)="collapseSidebar()" [routerLink]="route.url" class="card">
-      <div class="row">
-        <div class="col-md-4">
-          <em [class]="route.icon"></em>
-        </div>
-        <div class="col-md-9">
-          <div class="card-body">
-            <h5 class="card-title">{{route.title}}</h5>
-            <p class="card-text">{{route.text}}</p>
-          </div>
-        </div>
-      </div>
-    </a>
+<user-popup (onDialogClosed)="closeUserPopUp()" [showDialog]="userPopupVisible"></user-popup>
+<p-sidebar (window:keydown.esc)="collapseSidebar()" [(visible)]="sidebarVisible"
+           [closeOnEscape]="true" [fullScreen]="true"
+           [transitionOptions]="'125ms'">
+  <div class="navigation">
+    <h1>Where would you like to go?</h1>
+    <br>
+    <ul>
+      <li *ngFor="let route of routes">
+        <a (click)="collapseSidebar()" [attr.data-text]="route.title" [routerLink]="route.url">{{route.title}}</a>
+      </li>
+    </ul>
   </div>
 </p-sidebar>

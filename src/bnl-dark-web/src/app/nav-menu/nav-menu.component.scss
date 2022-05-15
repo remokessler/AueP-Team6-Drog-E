@@ -13,13 +13,20 @@ header {
   height: 56px;
   overflow: hidden;
 
-  >nav {
+  > nav {
     width: 100%;
+
     .p-breadcrumb {
       padding: 0;
+
       .p-element {
         color: white;
       }
     }
   }
+}
+
+.p-sidebar-content {
+  height: calc(100% - 56px);
+  padding: 0;
 }

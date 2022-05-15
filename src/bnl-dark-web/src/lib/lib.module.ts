@@ -5,12 +5,14 @@ import { BreadcrumbService } from './services/breadcrumb.service';
 import { DialogComponent } from './dialog/dialog.component';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
+import { ListComponent } from './list/list.component';
 
 
 @NgModule({
   declarations: [
     LoadingSpinnerComponent,
-    DialogComponent
+    DialogComponent,
+    ListComponent
   ],
   imports: [
     CommonModule,

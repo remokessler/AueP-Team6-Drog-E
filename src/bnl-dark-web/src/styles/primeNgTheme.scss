@@ -2673,6 +2673,14 @@ p-treeselect.ng-invalid.ng-dirty > .p-treeselect {
   color: #212529;
   background: #ffffff;
   transition: box-shadow 0.15s;
+
+  p-sorticon {
+    display: inline-block;
+    width: auto;
+    @media screen and (max-width: 992px) {
+      width: 100%;
+    }
+  }
 }
 
 .p-datatable .p-datatable-tfoot > tr > td {
@@ -4709,6 +4717,7 @@ nav .p-toolbar {
   background: #ffffff;
   color: #212529;
   padding: 1.25rem 1rem;
+  z-index: -2;
 }
 
 .p-dialog .p-dialog-footer {
@@ -4797,18 +4806,21 @@ nav .p-toolbar {
 .p-sidebar .p-sidebar-header .p-sidebar-icon {
   width: 2rem;
   height: 2rem;
-  color: #6c757d;
+  color: $primary;
   border: 0 none;
   background: transparent;
   border-radius: 50%;
   transition: box-shadow 0.15s;
+
+  > .pi {
+    font-size: 1.5em;
+  }
 }
 
 .p-sidebar .p-sidebar-header .p-sidebar-close:enabled:hover,
 .p-sidebar .p-sidebar-header .p-sidebar-icon:enabled:hover {
-  color: #495057;
-  border-color: transparent;
-  background: transparent;
+  background: #eeeeee;
+  border-radius: 50%;
 }
 
 .p-sidebar .p-sidebar-header .p-sidebar-close:focus,

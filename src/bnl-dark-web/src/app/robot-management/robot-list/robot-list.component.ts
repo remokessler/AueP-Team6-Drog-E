@@ -72,7 +72,6 @@ export class RobotListComponent {
   }
 
   public onRowSelect(robot: IRobot): void {
-    console.log(robot, 'robot selected');
     // navigate
   }
 
@@ -87,6 +86,8 @@ export class RobotListComponent {
 
   private loadRobots(): void {
     this.robots$ = this._robotService.get(this._oDataQuery);
-    this._cdr.detectChanges();
+    this.robots$.pipe(take(1)).subscribe(() =>{
+      this._cdr.detectChanges();
+    });
   }
 }

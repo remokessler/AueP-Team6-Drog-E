@@ -1,13 +1,12 @@
-import { Inject, Injectable } from '@angular/core';
+import { AfterViewInit, Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, tap } from 'rxjs/operators';
 import { AuthResponse } from '../models/auth-response';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { Observable, ReplaySubject} from 'rxjs';
-
+import { Observable, ReplaySubject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private static _tokenSubject$ = new ReplaySubject<string>(1);
@@ -25,20 +24,28 @@ export class AuthService {
 
   public login(credentials: any) {
     return this._httpClient.post<AuthResponse>(`${ this._baseUrl }api/auth/login`, credentials, {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     })
       .pipe(tap(authResponse => {
           const token = authResponse.token;
-          localStorage.setItem("jwt", token);
+          localStorage.setItem('jwt', token);
           AuthService._tokenSubject$.next(token);
         }, () => {
           this.logout();
-        })
+        }),
       );
   }
 
+  public tryLoginWithPastJwt() {
+    const token = localStorage.getItem('jwt');
+    if (!token) {
+      return;
+    }
+    AuthService._tokenSubject$.next(token);
+  }
+
   public logout = () => {
-    localStorage.removeItem("jwt");
+    localStorage.removeItem('jwt');
     AuthService._tokenSubject$.next('');
     location.reload();
   };

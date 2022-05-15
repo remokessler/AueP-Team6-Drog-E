@@ -1,3 +1,9 @@
 <dialog (onDialogClosed)="closeDialog()" [hideFooter]="true" [showDialog]="showDialog" [dialogTitle]="(userName | async) ?? ''">
-  <button (click)="logout()">Logout</button>
+  <div class="navigation">
+    <ul>
+      <li>
+        <button [attr.data-text]="'Logout'" (click)="logout()">Logout</button>
+      </li>
+    </ul>
+  </div>
 </dialog>

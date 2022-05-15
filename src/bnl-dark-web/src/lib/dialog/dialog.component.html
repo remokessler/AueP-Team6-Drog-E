@@ -6,8 +6,8 @@
           [visible]="showDialog"
           header="{{dialogTitle}}">
   <ng-content></ng-content>
-  <ng-template *ngif="hideFooter !== true" pTemplate="footer">
-    <div class="row justify-content-between">
+  <ng-template pTemplate="footer">
+    <div *ngIf="hideFooter !== true" class="row justify-content-between">
       <div class="col col-auto">
         <button (click)="close()" class="p-button-text" label="Cancel" pButton></button>
       </div>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { JwtHelperService } from '@auth0/angular-jwt';
+import { AuthService } from './user-management/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +7,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class AppComponent {
   public title = 'app';
+
+  public constructor(private readonly _authService: AuthService) {
+    this._authService.tryLoginWithPastJwt();
+  }
 }
