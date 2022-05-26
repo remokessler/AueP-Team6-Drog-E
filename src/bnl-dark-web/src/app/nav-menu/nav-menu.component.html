@@ -1,4 +1,4 @@
-<header>
+<header *ngIf="(isAuthenticated | async) === true">
   <nav>
     <p-toolbar [classList]="['toolbar']">
       <div *ngIf="breadcrumbs$ | async as breadcrumbs else loadingSidebar" class="p-toolbar-group-left">
@@ -8,18 +8,11 @@
         <p-breadcrumb [model]="[]"></p-breadcrumb>
       </ng-template>
       <div class="p-toolbar-group-right">
-        <div *ngIf="(isAuthenticated | async) === true" class="p-breadcrumb p-component">
+        <div  class="p-breadcrumb p-component">
           <ul>
             <li>
               <a (click)="showUserPopUp()" class="p-element p-menuitem-link ng-star-inserted"
                  title="Manage">Hello {{(userName | async)}}</a>
-            </li>
-          </ul>
-        </div>
-        <div *ngIf="(isAuthenticated | async) !== true" class="p-breadcrumb p-component">
-          <ul>
-            <li>
-              <a [routerLink]='["/login"]' class="p-element p-menuitem-link ng-star-inserted">Login</a>
             </li>
           </ul>
         </div>

@@ -7,24 +7,29 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-nav-menu',
   templateUrl: './nav-menu.component.html',
-  styleUrls: [ './nav-menu.component.scss' ]
+  styleUrls: [ './nav-menu.component.scss' ],
 })
 export class NavMenuComponent {
 
   public sidebarVisible = false;
   public home = {
     icon: 'pi pi-home',
-    routerLink: '/'
+    routerLink: '/',
   } as MenuItem;
 
   public sidebar = {
     icon: 'pi pi-bars',
-    command: this.openSidebar.bind(this)
+    command: this.openSidebar.bind(this),
   } as MenuItem;
 
   public routes = [
-    { icon: 'pi pi-home', title: 'Home', text: 'Home Sweet Home', url: '/' },
-    { icon: 'pi pi-robot', title: 'Robots', text: 'Manage all your Robots here', url: '/robots' }
+    { title: 'Home', url: '/' },
+    { title: 'Timetables', url: '/timetables' },
+    { title: 'Patients', url: '/patients' },
+    { title: 'Robots', url: '/robots' },
+    { title: 'Medicines', url: '/medicines' },
+    { title: 'Users', url: '/users' },
+    { title: 'Rooms', url: '/rooms' },
   ] as { icon: string, title: string, text: string, url: string }[];
   public userPopupVisible = false;
 

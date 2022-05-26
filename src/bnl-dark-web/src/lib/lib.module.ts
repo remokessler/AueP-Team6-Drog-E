@@ -5,25 +5,34 @@ import { BreadcrumbService } from './services/breadcrumb.service';
 import { DialogComponent } from './dialog/dialog.component';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
-import { ListComponent } from './list/list.component';
+import { IColumnConfig, ListComponent } from './list/list.component';
+import { SkeletonModule } from 'primeng/skeleton';
+import { TableModule } from 'primeng/table';
+import { InputTextModule } from 'primeng/inputtext';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [
     LoadingSpinnerComponent,
     DialogComponent,
-    ListComponent
+    ListComponent,
   ],
   imports: [
     CommonModule,
     DialogModule,
-    ButtonModule
+    ButtonModule,
+    SkeletonModule,
+    TableModule,
+    InputTextModule,
+    FormsModule,
   ],
   exports: [
-    DialogComponent
+    DialogComponent,
+    ListComponent,
   ],
   providers: [
-    BreadcrumbService
-  ]
+    BreadcrumbService,
+  ],
 })
 export class LibModule {}

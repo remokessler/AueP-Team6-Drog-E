@@ -5,20 +5,24 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { UserPopupComponent } from './user-popup/user-popup.component';
 import { LibModule } from '../../lib/lib.module';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
 
 
 @NgModule({
   declarations: [
     LoginComponent,
-    UserPopupComponent
+    UserPopupComponent,
   ],
   imports: [
     BrowserModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    LibModule
+    LibModule,
+    InputTextModule,
+    ButtonModule,
   ],
-  exports: [ LoginComponent, CommonModule, FormsModule, ReactiveFormsModule, UserPopupComponent ]
+  exports: [ LoginComponent, CommonModule, FormsModule, ReactiveFormsModule, UserPopupComponent ],
 })
 export class UserManagementModule {}

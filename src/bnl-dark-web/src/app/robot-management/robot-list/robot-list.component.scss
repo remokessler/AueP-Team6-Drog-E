@@ -3,6 +3,7 @@
   position: sticky;
   top: 104px;
   z-index: 100;
+
   *:not(p-sorticon) {
     display: table-cell !important;
   }
@@ -17,16 +18,21 @@
   z-index: 101;
   background: white;
   display: flex;
+
   .table-actions {
     width: 100%;
     margin: 4px;
+
     > .col {
       padding: 0;
-      >span {
+
+      > span {
         width: 100%;
-        >input {
+
+        > input {
           border-color: white;
           transition: border-color 0.5s;
+
           &:hover, &:focus, &:active {
             border-color: #ced4da;
           }
@@ -41,7 +47,7 @@
 }
 
 tr:hover, tr:focus, tr:active {
-  >:not(th) {
+  > :not(th):not(.edit-column) {
     text-decoration: underline !important;
     text-decoration-color: #ff4900 !important;
   }
@@ -53,4 +59,24 @@ td {
 
 .p-datatable-thead > tr > th {
   display: table-cell !important;
+}
+
+tr {
+  td.edit-column {
+    padding: 0 4px;
+    width: 10px;
+    > button {
+      @media screen and (min-width: 992px) {
+        visibility: hidden;
+      }
+      width: 2.75rem;
+      height: 2.75rem;
+    }
+  }
+
+  &:hover, &:focus, &:active {
+    td.edit-column > button {
+      visibility: visible;
+    }
+  }
 }

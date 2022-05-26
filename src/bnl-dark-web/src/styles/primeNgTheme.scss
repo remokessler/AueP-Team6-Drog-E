@@ -2748,8 +2748,7 @@ p-treeselect.ng-invalid.ng-dirty > .p-treeselect {
 
 .p-datatable .p-datatable-tbody > tr > td {
   text-align: left;
-  border: 1px solid #dee2e6;
-  border-width: 1px 0 0 0;
+  border: none;
   padding: 1rem 1rem;
 }
 
@@ -4806,7 +4805,7 @@ nav .p-toolbar {
 .p-sidebar .p-sidebar-header .p-sidebar-icon {
   width: 2rem;
   height: 2rem;
-  color: $primary;
+  color: #6c757d;
   border: 0 none;
   background: transparent;
   border-radius: 50%;

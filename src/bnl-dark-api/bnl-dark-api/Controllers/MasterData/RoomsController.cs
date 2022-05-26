@@ -8,8 +8,8 @@ namespace bnl_dark_api.Controllers;
 [Authorize]
 [ApiController]
 [Route("data/[controller]")]
-public class MedicinesController : DefaultCrudController<Robot>
+public class RoomsController : DefaultCrudController<Room>
 {
-    public MedicinesController(ILogger<RobotsController> logger, ApplicationDbContext context)
-        : base(logger, context, context.Robots) { }
+    public RoomsController(ILogger<RoomsController> logger, ApplicationDbContext context)
+        : base(logger, context, context.Rooms) { }
 }

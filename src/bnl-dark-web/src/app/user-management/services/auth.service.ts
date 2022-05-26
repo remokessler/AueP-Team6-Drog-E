@@ -1,4 +1,4 @@
-import { AfterViewInit, Inject, Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, tap } from 'rxjs/operators';
 import { AuthResponse } from '../models/auth-response';
@@ -44,9 +44,15 @@ export class AuthService {
     AuthService._tokenSubject$.next(token);
   }
 
-  public logout = () => {
+  public logout() {
     localStorage.removeItem('jwt');
     AuthService._tokenSubject$.next('');
     location.reload();
   };
+
+  public passwordReset() {
+    return this._httpClient.post<AuthResponse>(`${ this._baseUrl }api/auth/resetpassword`, {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    });
+  }
 }

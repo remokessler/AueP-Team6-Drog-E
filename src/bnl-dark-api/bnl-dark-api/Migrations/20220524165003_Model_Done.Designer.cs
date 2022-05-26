@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using bnl_dark_api.DataBase;
 
@@ -11,9 +12,10 @@ using bnl_dark_api.DataBase;
 namespace bnl_dark_api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220524165003_Model_Done")]
+    partial class Model_Done
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -191,10 +193,10 @@ namespace bnl_dark_api.Migrations
                     b.Property<DateTimeOffset>("Leave")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<int?>("PatientId")
+                    b.Property<int>("PatientId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("RoomId")
+                    b.Property<int>("RoomId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -220,7 +222,7 @@ namespace bnl_dark_api.Migrations
                     b.Property<int>("MedicineAmountPerIteration")
                         .HasColumnType("int");
 
-                    b.Property<int?>("MedicineId")
+                    b.Property<int>("MedicineId")
                         .HasColumnType("int");
 
                     b.Property<int>("TotalTimesToBeHealed")
@@ -365,11 +367,15 @@ namespace bnl_dark_api.Migrations
                 {
                     b.HasOne("bnl_dark_api.Models.Patient", "Patient")
                         .WithMany()
-                        .HasForeignKey("PatientId");
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("bnl_dark_api.Models.Room", "Room")
                         .WithMany()
-                        .HasForeignKey("RoomId");
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Patient");
 
@@ -384,7 +390,9 @@ namespace bnl_dark_api.Migrations
 
                     b.HasOne("bnl_dark_api.Models.Medicine", "Medicine")
                         .WithMany()
-                        .HasForeignKey("MedicineId");
+                        .HasForeignKey("MedicineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Medicine");
                 });

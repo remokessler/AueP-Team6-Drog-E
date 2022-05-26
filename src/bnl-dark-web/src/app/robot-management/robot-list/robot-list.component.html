@@ -1,96 +1,13 @@
-<div *ngIf="robots$ | async as robots; else loading" class="row">
-  <p-table (onSort)="sort($event)" [sortField]="sortField"
-           [sortOrder]="sortOrder" [value]="robots" class="col-12" dataKey="id"
-           selectionMode="single" styleClass="p-datatable-striped">
-    <ng-template pTemplate="caption">
-      <div class="table-actions row justify-content-between" style="margin-bottom: 4px">
-        <div class="col col-auto">
-          <button (click)="openDialog()" class="p-button-text" icon="pi pi-check" iconPos="left"
-                  label="New Robot" pButton
-                  style="margin-right: 8px"></button>
-        </div>
-        <div class="col">
-          <span class="p-input-icon-left">
-              <i class="pi pi-search"></i>
-              <input #searchField (ngModelChange)="filterModelChanged.next($event)" [ngModel]="filter" pInputText
-                     placeholder="Search keyword"
-                     type="text" />
-          </span>
-        </div>
-      </div>
-    </ng-template>
-    <ng-template pTemplate="header">
-      <tr>
-        <th pSortableColumn="ID" style="display:table-cell!important">ID
-          <p-sortIcon field="ID"></p-sortIcon>
-        </th>
-        <th pSortableColumn="Name" style="display:table-cell!important">Name
-          <p-sortIcon field="Name"></p-sortIcon>
-        </th>
-        <th pSortableColumn="Location" style="display:table-cell!important">Location
-          <p-sortIcon field="Location"></p-sortIcon>
-        </th>
-        <th pSortableColumn="State" style="display:table-cell!important">State
-          <p-sortIcon field="State"></p-sortIcon>
-        </th>
-      </tr>
-    </ng-template>
-    <ng-template let-robot pTemplate="body">
-      <tr (click)="onRowSelect(robot)">
-        <td>{{robot.id}}</td>
-        <td>{{robot.name}}</td>
-        <td>{{robot.location}}</td>
-        <td>{{robot.state}}</td>
-      </tr>
-    </ng-template>
-  </p-table>
-</div>
-
-<ng-template #loading>
-  <p-table [customSort]="true" [value]="[1,2,3,4,5,6,7,8,9,10]" class="col-12" dataKey="id" responsiveLayout="scroll"
-           styleClass="p-datatable-striped">
-    <ng-template pTemplate="header">
-      <tr>
-        <th pSortableColumn="ID">
-          <p-sortIcon field="ID"></p-sortIcon>
-        </th>
-        <th pSortableColumn="Name">
-          <p-sortIcon field="Name"></p-sortIcon>
-        </th>
-        <th pSortableColumn="Location">
-          <p-sortIcon field="Location"></p-sortIcon>
-        </th>
-        <th pSortableColumn="State">
-          <p-sortIcon field="State"></p-sortIcon>
-        </th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body">
-      <tr>
-        <td>
-          <p-skeleton></p-skeleton>
-        </td>
-        <td>
-          <p-skeleton></p-skeleton>
-        </td>
-        <td>
-          <p-skeleton></p-skeleton>
-        </td>
-        <td>
-          <p-skeleton></p-skeleton>
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
-</ng-template>
-
-<dialog (onDialogClosed)="closeDialog()" [hideFooter]="false" (onDialogSubmitted)="createRobot()"
-        [showDialog]="(showDialog$ | async) === true"
-        dialogTitle="New Robot" submitText="Create Robot">
-  <form>
-      <span class="p-float-label">
-            <input [(ngModel)]="dialogRobot.name" id="name" name="name" pInputText type="text">
-            <label for="name">Name</label>
-        </span>
-  </form>
-</dialog>
+<list
+  (createElement)="createRobot()"
+  (dialogElementChanged)="dialogRobot = $event"
+  (loadData)="loadRobots($event)"
+  [columnConfig]="columnConfig"
+  [data$]="robots$"
+  newButtonText="New Robot"
+>
+  <span class="p-float-label">
+    <input [(ngModel)]="dialogRobot.name" id="name" name="name" pInputText type="text">
+    <label for="name">Name</label>
+  </span>
+</list>

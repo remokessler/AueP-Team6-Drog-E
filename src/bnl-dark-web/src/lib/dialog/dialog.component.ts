@@ -18,9 +18,6 @@ export class DialogComponent {
   @Output()
   public onDialogClosed = new EventEmitter();
 
-  @Output()
-  public onDialogSubmitted = new EventEmitter();
-
   public close(): void {
     this.showDialog = false;
     this.onDialogClosed.emit();

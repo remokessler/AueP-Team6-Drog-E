@@ -4,7 +4,8 @@ import { AuthGuard } from './user-management/guards/auth-guard.guard';
 import { LoginComponent } from './user-management/login/login.component';
 
 export const routes = [
-  { path: '', component: HomeComponent, pathMatch: 'full' },
+  { path: '', component: HomeComponent, pathMatch: 'full', canActivate: [ AuthGuard ] },
   { path: 'login', component: LoginComponent },
-  { path: 'robots', component: RobotListComponent, canActivate: [AuthGuard] },
+  { path: 'robots', component: RobotListComponent, canActivate: [ AuthGuard ] },
+  //
 ];
