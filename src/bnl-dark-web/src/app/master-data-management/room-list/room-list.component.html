@@ -1,0 +1,53 @@
+<list
+  (dialogElementChanged)="dialogRoom = $event"
+  [columnConfig]="columnConfig"
+  [service]="roomService"
+  entityName="Room"
+>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+      <span class="p-float-label">
+        <input [(ngModel)]="dialogRoom.name"
+               id="name"
+               maxlength="50"
+               minlength="3"
+               name="name"
+               pInputText
+               required
+               type="text"
+        >
+        <label for="name">Name</label>
+      </span>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-6">
+      <span class="p-float-label">
+        <p-inputNumber [(ngModel)]="dialogRoom.floor"
+                       [max]="3" [min]="0"
+                       [required]="true"
+                       id="floor"
+                       locale="de-CH"
+                       mode="decimal"
+                       name="floor"
+        ></p-inputNumber>
+        <label for="floor">Floor</label>
+      </span>
+      </div>
+      <div class="col-6">
+      <span class="p-float-label">
+        <p-inputNumber [(ngModel)]="dialogRoom.number"
+                       [max]="15" [min]="0"
+                       [required]="true"
+                       id="number"
+                       locale="de-CH"
+                       mode="decimal"
+                       name="number"
+        ></p-inputNumber>
+        <label for="number">Room-Number</label>
+      </span>
+      </div>
+    </div>
+  </div>
+</list>

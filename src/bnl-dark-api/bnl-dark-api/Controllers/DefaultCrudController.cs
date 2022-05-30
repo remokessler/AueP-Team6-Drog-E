@@ -54,7 +54,7 @@ public class DefaultCrudController<T>: ODataController where T : class, IId
     }
     
     [EnableQuery]
-    [HttpPatch]
+    [HttpPatch("{key}")]
     public virtual async Task<ActionResult<T>> Patch([FromODataUri] int key, Delta<T> delta)
     {
         _logger.LogTrace($"{nameof(T)}.PATCH: with delta: {JsonConvert.SerializeObject(delta)}");
@@ -80,7 +80,7 @@ public class DefaultCrudController<T>: ODataController where T : class, IId
     }
     
     [EnableQuery]
-    [HttpPut]
+    [HttpPut("{key}")]
     public virtual async Task<ActionResult<T>> Put([FromODataUri] int key, T updatedObject)
     {
         _logger.LogTrace($"{nameof(T)}.PUT: with key: {key} with object: {JsonConvert.SerializeObject(updatedObject)}");
@@ -105,5 +105,25 @@ public class DefaultCrudController<T>: ODataController where T : class, IId
             return Conflict(updatedObject);
         }
         return Updated(updatedObject);
+    }
+    
+    [EnableQuery]
+    [HttpDelete("{key}")]
+    public virtual async Task<ActionResult> Delete([FromODataUri] int key)
+    {
+        _logger.LogTrace($"{nameof(T)}.DELETE: with key: {key}");
+        
+        try
+        {
+            var todelete = await _dbSet.FindAsync(key);
+            _dbSet.Remove(todelete);
+            await _context.SaveChangesAsync();
+        }
+        catch 
+        {
+            _logger.LogError($"{nameof(T)}.PUT: exited because Concurrency Issues with key: {key}");
+            return NotFound(key);
+        }
+        return Ok();
     }
 }

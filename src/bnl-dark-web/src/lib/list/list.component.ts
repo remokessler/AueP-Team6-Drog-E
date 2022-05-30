@@ -1,7 +1,19 @@
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import { BehaviorSubject, Observable, of, Subject, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged, take, tap } from 'rxjs/operators';
 import { QueryBuilder } from 'odata-query-builder';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ICrudService } from '../models/crud-service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 export interface IColumnConfig {
   title: string;
@@ -14,25 +26,22 @@ export interface IColumnConfig {
   templateUrl: './list.component.html',
   styleUrls: [ './list.component.scss' ],
 })
-export class ListComponent<T> {
+export class ListComponent<T> implements OnInit {
   @Input()
-  public data$: Observable<T[]> | undefined;
-  @Input()
-  public newButtonText: string = '';
+  public entityName: string = '';
   @Input()
   public columnConfig: IColumnConfig[] | undefined;
+  @Input()
+  public service: ICrudService<T> | undefined;
 
-  @Output()
-  public loadData = new EventEmitter<string>();
-  @Output()
-  public navigate = new EventEmitter<T>();
-  @Output()
-  public createElement = new EventEmitter<T>();
   @Output()
   public dialogElementChanged = new EventEmitter<T>();
 
   @ViewChild('searchField')
   public searchField: ElementRef | undefined;
+
+  public data$: Observable<T[]> | undefined;
+  public editDialog = false;
   public sortField = '';
   public sortOrder = 0;
   public filter = '';
@@ -41,8 +50,7 @@ export class ListComponent<T> {
   private _filterModelChangedSubscription: Subscription;
   private _showDialogSubject$ = new BehaviorSubject<boolean>(false);
 
-  constructor() {
-    this.loadData.emit();
+  public constructor(private readonly _confirmationService: ConfirmationService, private readonly _messageService: MessageService, private readonly _cdr: ChangeDetectorRef) {
     this._filterModelChangedSubscription = this.filterModelChanged.pipe(
       tap((text) => {
         this.filter = text;
@@ -50,10 +58,16 @@ export class ListComponent<T> {
       debounceTime(500),
       distinctUntilChanged(),
     ).subscribe(() => {
-      this.loadData.emit(this._oDataQuery);
-      setTimeout(() => this.searchField?.nativeElement.focus(), 100);
+      this.loadData(this._oDataQuery);
+      this.data$?.pipe(take(1)).subscribe(() => {
+        setTimeout(() => this.searchField?.nativeElement.focus(), 1);
+      });
     });
   }
+
+  public get dialogTitle() {
+    return !this.editDialog ? `New ${ this.entityName }` : `Edit ${ this.entityName }`;
+  };
 
   public get showDialog$(): Observable<boolean> {
     return this._showDialogSubject$.asObservable();
@@ -62,14 +76,14 @@ export class ListComponent<T> {
   private get _oDataQuery(): string {
     let query = new QueryBuilder();
     if (this.sortField) {
-      query = query.orderBy(`${ this.sortField } ${ this.sortOrder === -1 ? 'desc' : '' }`);
+      query = query.orderBy(`${ this.columnConfig?.filter(c => c.title === this.sortField)[0].field } ${ this.sortOrder === -1 ? 'desc' : '' }`);
     }
     if (this.filter) {
       const containsQuery = this.columnConfig?.map(config => {
         if (config.queryType === 'contains') {
           return `contains(${ config.field },'${ this.filter }')`;
-        } else if(Number(this.filter)) {
-          return `${config.field} eq ${this.filter}`;
+        } else if (Number(this.filter)) {
+          return `${ config.field } eq ${ this.filter }`;
         }
         return '';
       })?.filter(q => q !== '');
@@ -78,20 +92,35 @@ export class ListComponent<T> {
     return query.toQuery();
   }
 
+  public ngOnInit(): void {
+    this.loadData();
+  }
+
   public openDialog(element: T | undefined = undefined) {
+    this.editDialog = element !== undefined;
     this.newElement = { ...element } as T ?? {} as T;
     this.dialogElementChanged.emit(this.newElement);
     this._showDialogSubject$.next(true);
   }
 
-  public closeDialog() {
-    this.createElement.emit({ ...this.newElement } as T);
+  public closeDialog(submitted: boolean | undefined = undefined) {
+    if (submitted !== true) {
+      this.newElement = {} as T;
+      this._showDialogSubject$.next(false);
+      return;
+    }
+
+    if (this.editDialog) {
+      this.updateElement();
+    } else {
+      this.createElement();
+    }
     this.newElement = {} as T;
     this._showDialogSubject$.next(false);
   }
 
   public onRowSelect(clickedElement: T): void {
-    this.navigate.emit(clickedElement);
+    this.service?.navigate$({ ...clickedElement } as T);
   }
 
   public sort($event: { field: string, order: number }): void {
@@ -100,6 +129,79 @@ export class ListComponent<T> {
     }
     this.sortField = $event.field;
     this.sortOrder = $event.order;
-    this.loadData.emit(this._oDataQuery);
+    this.loadData(this._oDataQuery);
+  }
+
+  public openDeleteDialog($event: HTMLElement, item: T): void {
+    this._confirmationService.confirm({
+      target: $event ?? undefined,
+      message: `Are you sure you want to delete this ${ this.entityName }?`,
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.service?.delete$(item).pipe(take(1)).subscribe(
+          () => this.loadData(),
+          (error: HttpErrorResponse) => this._messageService.add({
+            severity: 'error',
+            summary: `Error while deleting ${ this.entityName }`,
+            detail: error.message,
+            sticky: true,
+          }),
+        );
+      },
+      reject: () => {
+        // nothing
+      },
+    });
+  }
+
+  public limit(field: any): string {
+    return field.toString().length < 25 ? field.toString().substring(0, 25) : field.toString() + '...';
+  }
+
+  private updateElement(): void {
+    console.log('update elem');
+    this.service?.patch$({ ...this.newElement } as T).pipe(take(1)).subscribe(
+      () => {
+        this.loadData();
+        console.log('update elem');
+        this._showDialogSubject$.next(false);
+      },
+      (error: HttpErrorResponse) => this._messageService.add({
+        severity: 'error',
+        summary: `Error while updating ${ this.entityName }`,
+        detail: error.message,
+        sticky: true,
+      }),
+    );
+  }
+
+  private createElement(): void {
+    this.service?.create$({ ...this.newElement } as T).pipe(take(1)).subscribe(
+      () => {
+        this.loadData();
+        this._showDialogSubject$.next(false);
+      },
+      (error: HttpErrorResponse) => this._messageService.add({
+        severity: 'error',
+        summary: `Error while creating ${ this.entityName }`,
+        detail: error.message,
+        sticky: true,
+      }),
+    );
+  }
+
+  private loadData(query: string | undefined = undefined) {
+    this.data$ = this.service?.get$(query);
+    this.data$?.pipe(take(1)).subscribe(
+      () => {
+        this._cdr.detectChanges();
+      },
+      (error: HttpErrorResponse) => this._messageService.add({
+        severity: 'error',
+        summary: `Error while loading ${ this.entityName }`,
+        detail: error.message,
+        sticky: true,
+      }),
+    );
   }
 }

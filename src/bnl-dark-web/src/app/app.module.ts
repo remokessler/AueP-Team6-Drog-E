@@ -22,6 +22,7 @@ import { AuthGuard } from './user-management/guards/auth-guard.guard';
 import { UserManagementModule } from './user-management/user-management.module';
 import { CardModule } from 'primeng/card';
 import { SplitButtonModule } from 'primeng/splitbutton';
+import { MasterDataManagementModule } from './master-data-management/master-data-management.module';
 
 export function tokenGetter() {
   return localStorage.getItem('jwt');
@@ -49,6 +50,7 @@ export function tokenGetter() {
     FormsModule,
     ReactiveFormsModule,
     UserManagementModule,
+    MasterDataManagementModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

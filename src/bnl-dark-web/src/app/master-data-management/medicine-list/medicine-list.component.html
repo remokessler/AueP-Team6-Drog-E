@@ -1,0 +1,87 @@
+<list
+  (dialogElementChanged)="dialogMedicine = $event"
+  [columnConfig]="columnConfig"
+  [service]="medicineService"
+  entityName="Medicine"
+>
+  <div class="container">
+    <div class="row">
+      <div class="col-6">
+        <span class="p-float-label">
+          <input [(ngModel)]="dialogMedicine.name"
+                 id="name"
+                 maxlength="50"
+                 minlength="3"
+                 name="name"
+                 pInputText
+                 required
+                 type="text"
+          >
+          <label for="name">Name</label>
+        </span>
+      </div>
+      <div class="col-6">
+        <span class="p-float-label">
+          <input [(ngModel)]="dialogMedicine.latinName"
+                 id="latinname"
+                 maxlength="50"
+                 minlength="3"
+                 name="latinname"
+                 pInputText
+                 required
+                 type="text"
+          >
+          <label for="latinname">Latin Name</label>
+        </span>
+      </div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-6">
+        <span class="p-float-label">
+          <input [(ngModel)]="dialogMedicine.medicineType"
+                 id="medicineType"
+                 maxlength="50"
+                 minlength="3"
+                 name="medicineType"
+                 pInputText
+                 required
+                 type="text"
+          >
+          <label for="medicineType">Medicine Type</label>
+        </span>
+      </div>
+      <div class="col-6">
+        <span class="p-float-label">
+          <input [(ngModel)]="dialogMedicine.amountPerDay"
+                 id="amountPerDay"
+                 maxlength="50"
+                 minlength="3"
+                 name="amountPerDay"
+                 pInputText
+                 required
+                 type="text"
+          >
+          <label for="amountPerDay">Amounts per Day</label>
+        </span>
+      </div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-12">
+        <span class="p-float-label">
+          <input [(ngModel)]="dialogMedicine.dispenser"
+                 id="dispenser"
+                 maxlength="50"
+                 minlength="3"
+                 name="medicineType"
+                 pInputText
+                 required
+                 type="text"
+          >
+          <label for="dispenser">Dispenser Number</label>
+        </span>
+      </div>
+    </div>
+  </div>
+</list>

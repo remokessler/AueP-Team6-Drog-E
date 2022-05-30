@@ -1,0 +1,87 @@
+<list
+  (dialogElementChanged)="dialogUser = $event"
+  [columnConfig]="columnConfig"
+  [service]="userService"
+  entityName="User"
+>
+  <div class="container">
+    <div class="row">
+      <div class="col-6">
+        <span class="p-float-label">
+          <input [(ngModel)]="dialogUser.firstName"
+                 id="firstName"
+                 maxlength="50"
+                 minlength="3"
+                 name="firstName"
+                 pInputText
+                 required
+                 type="text"
+          >
+          <label for="firstName">Firstname</label>
+        </span>
+      </div>
+      <div class="col-6">
+        <span class="p-float-label">
+          <input [(ngModel)]="dialogUser.name"
+                 id="name"
+                 maxlength="50"
+                 minlength="3"
+                 name="name"
+                 pInputText
+                 required
+                 type="text"
+          >
+          <label for="name">Name</label>
+        </span>
+      </div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-6">
+        <span class="p-float-label">
+          <input [(ngModel)]="dialogUser.email"
+                 id="email"
+                 maxlength="50"
+                 minlength="3"
+                 name="email"
+                 pInputText
+                 required
+                 type="email"
+          >
+          <label for="email">E-Mail</label>
+        </span>
+      </div>
+      <div class="col-6">
+        <span class="p-float-label">
+          <input [(ngModel)]="dialogUser.password"
+                 id="password"
+                 maxlength="50"
+                 minlength="3"
+                 name="password"
+                 pInputText
+                 required
+                 type="password"
+          >
+          <label for="password">Password</label>
+        </span>
+      </div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-12">
+        <span class="p-float-label">
+          <input [(ngModel)]="dialogUser.jobDescription"
+                 id="jobDescription"
+                 maxlength="50"
+                 minlength="3"
+                 name="jobDescription"
+                 pInputText
+                 required
+                 type="text"
+          >
+          <label for="jobDescription">Job</label>
+        </span>
+      </div>
+    </div>
+  </div>
+</list>

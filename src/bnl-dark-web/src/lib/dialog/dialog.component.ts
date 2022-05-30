@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'dialog',
@@ -14,16 +15,18 @@ export class DialogComponent {
   public showDialog = false;
   @Input()
   public hideFooter = false;
+  @Input()
+  public enableButton = true;
 
   @Output()
-  public onDialogClosed = new EventEmitter();
+  public onDialogClosed = new EventEmitter<boolean>();
 
   public close(): void {
     this.showDialog = false;
-    this.onDialogClosed.emit();
+    this.onDialogClosed.emit(false);
   }
 
   public submit(): void {
-    this.onDialogClosed.emit();
+    this.onDialogClosed.emit(true);
   }
 }

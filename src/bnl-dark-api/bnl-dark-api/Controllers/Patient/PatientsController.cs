@@ -6,7 +6,7 @@ namespace bnl_dark_api.Controllers;
 
 
 [ApiController]
-[Route("data/[controller]")]
+[Route("odata/[controller]")]
 public class PatientsController : DefaultCrudController<Patient>
 {
     public PatientsController(ILogger<PatientsController> logger, ApplicationDbContext context)

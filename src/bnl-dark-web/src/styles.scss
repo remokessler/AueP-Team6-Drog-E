@@ -127,3 +127,28 @@ a {
     }
   }
 }
+
+@media screen and (max-width: 960px) {
+  #crud-table .p-datatable-tbody > tr > td:not(.edit-column) {
+    width: inherit !important;
+  }
+  #crud-table .p-datatable-tbody > tr > td.edit-column {
+    width: 100px !important;
+  }
+}
+
+.p-confirm-popup-footer {
+  display: flex;
+  justify-content: space-between;
+
+  button {
+    width: 40% !important;
+    display: flex;
+  }
+}
+
+.p-float-label {
+  * {
+    width: 100%;
+  }
+}

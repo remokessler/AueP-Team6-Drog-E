@@ -5,6 +5,7 @@
            [value]="data"
            class="col-12"
            dataKey="id"
+           id="crud-table"
            selectionMode="single"
            styleClass="p-datatable-striped"
   >
@@ -12,7 +13,7 @@
       <div class="table-actions row justify-content-between" style="margin-bottom: 4px">
         <div class="col col-auto">
           <button (click)="openDialog()"
-                  [label]="newButtonText"
+                  [label]="'New ' + entityName"
                   class="p-button-text"
                   icon="pi pi-check"
                   iconPos="left"
@@ -49,10 +50,20 @@
     <ng-template let-item pTemplate="body">
       <tr (click)="onRowSelect(item)">
         <td *ngFor="let col of columnConfig">
-          {{item[col.field]}}
+          {{limit(item[col.field])}}
         </td>
         <td class="edit-column">
-          <button (click)="openDialog(item)" class="p-button-text p-button-rounded p-button-icon-only" icon="pi pi-pencil" pButton></button>
+          <button (click)="openDialog(item)"
+                  class="p-button-text p-button-rounded p-button-icon-only"
+                  icon="pi pi-pencil"
+                  pButton
+          ></button>
+          <button #deleteButton (click)="openDeleteDialog(deleteButton, item)"
+                  class="p-button-text p-button-rounded p-button-icon-only"
+                  icon="pi pi-trash"
+                  pButton
+          ></button>
+          <p-confirmPopup [hideTransitionOptions]="'60ms'" [showTransitionOptions]="'60ms'"></p-confirmPopup>
         </td>
       </tr>
     </ng-template>
@@ -71,7 +82,7 @@
     <ng-template pTemplate="caption">
       <div class="table-actions row justify-content-between" style="margin-bottom: 4px">
         <div class="col col-auto">
-          <button [label]="newButtonText"
+          <button [label]="'New ' + entityName"
                   class="p-button-text"
                   disabled
                   icon="pi pi-check"
@@ -117,13 +128,19 @@
   </p-table>
 </ng-template>
 
-<dialog (onDialogClosed)="closeDialog()"
-        [dialogTitle]="newButtonText"
+<p-toast [hideTransitionOptions]="'150ms'"
+         [preventOpenDuplicates]="true"
+         [showTransitionOptions]="'150ms'"
+         position="bottom-center"
+></p-toast>
+<dialog (onDialogClosed)="closeDialog($event)"
+        [dialogTitle]="dialogTitle"
+        [enableButton]="form.checkValidity()"
         [hideFooter]="false"
         [showDialog]="(showDialog$ | async) === true"
-        submitText="Create Robot"
+        [submitText]="'Create ' + this.entityName"
 >
-  <form>
+  <form #form>
     <ng-content></ng-content>
   </form>
 </dialog>

@@ -5,7 +5,6 @@ public class AnamnesisRecord : IAnamnesisRecord
     public int Id { get; set; }
     public Stay Stay { get; set; }
     public IEnumerable<Therapy>? Therapies { get; set; }
-    
 }
 
 public interface IAnamnesisRecord: IId

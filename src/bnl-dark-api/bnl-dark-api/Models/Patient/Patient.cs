@@ -1,11 +1,17 @@
-﻿namespace bnl_dark_api.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace bnl_dark_api.Models;
 
 public class Patient : IPatient
 {
     public int Id { get; set; }
+    [Required]
     public string Name { get; set; }
+    [Required]
     public string Firstname { get; set; }
+    [Required]
     public DateTimeOffset Birthday { get; set; }
+    [Required]
     public string SocialSecurityNumber { get; set; }
     public IEnumerable<AnamnesisRecord>? Anamnesis { get; set; }
 }

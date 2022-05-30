@@ -1,13 +1,11 @@
 <list
-  (createElement)="createRobot()"
   (dialogElementChanged)="dialogRobot = $event"
-  (loadData)="loadRobots($event)"
   [columnConfig]="columnConfig"
-  [data$]="robots$"
-  newButtonText="New Robot"
+  [service]="robotService"
+  entityName="Robot"
 >
   <span class="p-float-label">
-    <input [(ngModel)]="dialogRobot.name" id="name" name="name" pInputText type="text">
+    <input [(ngModel)]="dialogRobot.name" id="name" name="name" required pInputText type="text">
     <label for="name">Name</label>
   </span>
 </list>

@@ -5,9 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace bnl_dark_api.Controllers;
 
-[Authorize]
 [ApiController]
-[Route("data/[controller]")]
+[Route("odata/[controller]")]
 public class MedicinesController : DefaultCrudController<Medicine>
 {
     public MedicinesController(ILogger<MedicinesController> logger, ApplicationDbContext context)

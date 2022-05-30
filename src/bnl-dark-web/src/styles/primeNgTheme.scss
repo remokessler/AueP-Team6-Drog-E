@@ -4341,10 +4341,6 @@ p-treeselect.ng-invalid.ng-dirty > .p-treeselect {
   color: #6c757d;
 }
 
-.p-card .p-card-content {
-  padding: 1rem 0;
-}
-
 .p-card .p-card-footer {
   padding: 1rem 0 0 0;
 }
@@ -4647,7 +4643,7 @@ nav .p-toolbar {
 .p-confirm-popup:before {
   border: solid transparent;
   border-color: rgba(0, 0, 0, 0);
-  border-bottom-color: rgba(0, 0, 0, 0.2);
+  border-bottom-color: #ccc;
 }
 
 .p-confirm-popup.p-confirm-popup-flipped:after {

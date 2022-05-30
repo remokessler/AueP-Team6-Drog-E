@@ -5,11 +5,14 @@ import { BreadcrumbService } from './services/breadcrumb.service';
 import { DialogComponent } from './dialog/dialog.component';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
-import { IColumnConfig, ListComponent } from './list/list.component';
+import { ListComponent } from './list/list.component';
 import { SkeletonModule } from 'primeng/skeleton';
 import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 
 @NgModule({
@@ -26,6 +29,8 @@ import { FormsModule } from '@angular/forms';
     TableModule,
     InputTextModule,
     FormsModule,
+    ConfirmPopupModule,
+    ToastModule,
   ],
   exports: [
     DialogComponent,
@@ -33,6 +38,8 @@ import { FormsModule } from '@angular/forms';
   ],
   providers: [
     BreadcrumbService,
+    ConfirmationService,
+    MessageService
   ],
 })
 export class LibModule {}

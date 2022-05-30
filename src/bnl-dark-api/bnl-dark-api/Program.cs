@@ -95,5 +95,7 @@ static IEdmModel GetEdmModel()
 {
     var builder = new ODataConventionModelBuilder();
     builder.EntitySet<Robot>(nameof(Robot));
+    builder.EntitySet<Room>(nameof(Room));
+    builder.EntitySet<Medicine>(nameof(Medicine));
     return builder.GetEdmModel();
 }
