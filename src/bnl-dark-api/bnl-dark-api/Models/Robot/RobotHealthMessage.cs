@@ -1,22 +1,32 @@
-﻿namespace bnl_dark_api.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace bnl_dark_api.Models;
 
 public class RobotHealthMessage: IRobotHealthMessage
 {
     public int Id { get; set; }
-    public Room Room { get; set; }
+    [ForeignKey(nameof(TherapyIteration))]
+    public int TherapyIterationId { get; set; }
     public TherapyIteration TherapyIteration { get; set; }
-    public bool Skipped { get; set; }
-    public RobotState RobotState { get; set; }
+    public RobotHealthMessageStatus RobotHealthMessageStatus { get; set; }
     public DateTimeOffset Received { get; set; }
 }
 
 public interface IRobotHealthMessage : IId
 {
-    public Room Room { get; set; }
+    public int TherapyIterationId { get; set; }
     public TherapyIteration TherapyIteration { get; set; }
-    public bool Skipped { get; set; }
-    public RobotState RobotState { get; set; }
-    // TBD: What can we get from the robot?
-    // public int BatteryLevel { get; set; }
+    public RobotHealthMessageStatus RobotHealthMessageStatus { get; set; }
     public DateTimeOffset Received { get; set; }
+}
+
+public enum RobotHealthMessageStatus
+{
+    Health = 0,
+    Error = 1,
+    WaitForStart = 2,
+    PickupSuccess = 3,
+    DeliveryEnterRoomStatus = 4,
+    DeliveryMedicineSuccess = 5,
+    DeliveryError = 6
 }

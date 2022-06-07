@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { IColumnConfig } from '../../../lib/list/list.component';
 import { BreadcrumbService } from '../../../lib/services/breadcrumb.service';
-import { IMedicine } from '../models/medicine';
+import { IMedicine, MedicineType } from '../models/medicine';
 import { MedicineService } from '../services/medicine.service';
 
 @Component({
@@ -12,10 +12,7 @@ import { MedicineService } from '../services/medicine.service';
 export class MedicineListComponent {
   public dialogMedicine = {} as IMedicine;
   public columnConfig = [
-    {
-      title: 'ID',
-      field: 'id',
-    },
+
     {
       title: 'Name',
       field: 'name',
@@ -30,6 +27,7 @@ export class MedicineListComponent {
       title: 'Type',
       field: 'medicineType',
       queryType: 'contains',
+      display: (field: any) => MedicineType[field],
     },
     {
       title: 'Dispenser',
@@ -37,11 +35,27 @@ export class MedicineListComponent {
     },
   ] as IColumnConfig[];
 
+  public medicineTypes = Object.entries(MedicineType).map(([ value, index ]) => ({
+    value,
+    index,
+  })).filter(x => !Number.isInteger(x.index));
+
   public constructor(private readonly _medicineService: MedicineService, private readonly _breadcrumbService: BreadcrumbService) {
     this._breadcrumbService.setBreadcrumb([ { label: 'Medicine' } ]);
   }
 
   public get medicineService() {
     return this._medicineService;
+  }
+
+  public dialogElementChanged($event: IMedicine): void {
+    this.dialogMedicine = $event;
+    if (this.dialogMedicine.medicineType === undefined || this.dialogMedicine.medicineType === null) {
+      this.dialogMedicine.medicineType = MedicineType.Unknown;
+    }
+  }
+
+  public asNumber(value: string): number {
+    return Number(value);
   }
 }

@@ -6,6 +6,8 @@ import { RobotService } from './services/robot.service';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { LibModule } from '../../lib/lib.module';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
 
 @NgModule({
   declarations: [
@@ -17,6 +19,8 @@ import { LibModule } from '../../lib/lib.module';
     FormsModule,
     InputTextModule,
     LibModule,
+    ButtonModule,
+    CardModule,
   ],
   providers: [
     RobotService,

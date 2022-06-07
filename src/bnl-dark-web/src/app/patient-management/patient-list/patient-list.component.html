@@ -1,0 +1,68 @@
+<list
+  (dialogElementChanged)="dialogPatient = $event"
+  [columnConfig]="columnConfig"
+  [service]="patientService"
+  entityName="Patient"
+>
+  <div class="container">
+    <div class="row">
+      <div class="col-6">
+        <span class="p-float-label">
+          <input [(ngModel)]="dialogPatient.firstname"
+                 id="firstName"
+                 maxlength="50"
+                 minlength="3"
+                 name="firstName"
+                 pInputText
+                 required
+                 type="text"
+          >
+          <label for="firstName">Firstname</label>
+        </span>
+      </div>
+      <div class="col-6">
+        <span class="p-float-label">
+          <input [(ngModel)]="dialogPatient.name"
+                 id="name"
+                 maxlength="50"
+                 minlength="3"
+                 name="name"
+                 pInputText
+                 required
+                 type="text"
+          >
+          <label for="name">Name</label>
+        </span>
+      </div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-6">
+        <span class="p-float-label">
+           <p-calendar [(ngModel)]="dialogPatient.birthday"
+                       [dateFormat]="'dd.mm.yy'"
+                       [maxDate]="now"
+                       [required]="true"
+                       id="birthday"
+                       inputId="birthday"
+                       name="birthday"
+           ></p-calendar>
+          <label for="firstName">Date of birth</label>
+        </span>
+      </div>
+      <div class="col-6">
+        <span class="p-float-label">
+          <input [(ngModel)]="dialogPatient.socialSecurityNumber"
+                 id="socialSecurityNumber"
+                 name="socialSecurityNumber"
+                 pInputText
+                 pattern="^[7][5][6][.][\d]{4}[.][\d]{4}[.][\d]{2}$"
+                 required
+                 type="text"
+          >
+          <label for="socialSecurityNumber">Social Security Number</label>
+        </span>
+      </div>
+    </div>
+  </div>
+</list>

@@ -1,5 +1,4 @@
-import { ChangeDetectorRef, Component} from '@angular/core';
-import { take } from 'rxjs/operators';
+import { Component } from '@angular/core';
 import { IColumnConfig } from '../../../lib/list/list.component';
 
 import { BreadcrumbService } from '../../../lib/services/breadcrumb.service';
@@ -14,10 +13,7 @@ import { RoomService } from '../services/room.service';
 export class RoomListComponent {
   public dialogRoom = {} as IRoom;
   public columnConfig = [
-    {
-      title: 'ID',
-      field: 'id',
-    },
+
     {
       title: 'Floor',
       field: 'floor',
@@ -30,7 +26,7 @@ export class RoomListComponent {
     {
       title: 'Room-Number',
       field: 'number',
-    }
+    },
   ] as IColumnConfig[];
 
   public constructor(private readonly _roomService: RoomService, private readonly _breadcrumbService: BreadcrumbService) {

@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 
 namespace bnl_dark_api.Models;
@@ -29,7 +31,7 @@ public interface IMedicine: IId
     public int Dispenser { get; set; }
     public MedicineType MedicineType { get; set; }
 }
-
+[JsonConverter(typeof(StringEnumConverter))]
 public enum MedicineType
 {
     Unknown,

@@ -10,7 +10,7 @@ export interface IUser {
 
 export enum JobDescription
 {
-  Doctor = 'Doctor',
-  Nurse = 'Nurse',
-  Administrative = 'Administrative'
+  Doctor,
+  Nurse,
+  Administrative
 }

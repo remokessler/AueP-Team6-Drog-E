@@ -1,8 +1,7 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RobotService } from '../services/robot.service';
 import { BreadcrumbService } from '../../../lib/services/breadcrumb.service';
 import { IRobot } from '../models/robot';
-import { take } from 'rxjs/operators';
 import { IColumnConfig } from '../../../lib/list/list.component';
 
 @Component({
@@ -14,10 +13,7 @@ import { IColumnConfig } from '../../../lib/list/list.component';
 export class RobotListComponent {
   public dialogRobot = {} as IRobot;
   public columnConfig = [
-    {
-      title: 'ID',
-      field: 'id',
-    },
+
     {
       title: 'Name',
       field: 'name',
@@ -28,6 +24,7 @@ export class RobotListComponent {
   public constructor(private readonly _robotService: RobotService, private readonly _breadcrumbService: BreadcrumbService) {
     this._breadcrumbService.setBreadcrumb([ { label: 'Robots' } ]);
   }
+
   public get robotService() {
     return this._robotService;
   }

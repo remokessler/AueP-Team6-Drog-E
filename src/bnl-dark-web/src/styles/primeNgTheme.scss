@@ -4326,13 +4326,19 @@ p-treeselect.ng-invalid.ng-dirty > .p-treeselect {
 }
 
 .p-card .p-card-body {
+  overflow: auto;
   padding: 1.5rem;
+}
+
+.p-card.overflow .p-card-body {
+  overflow: visible;
 }
 
 .p-card .p-card-title {
   font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
+  color: $secondary;
 }
 
 .p-card .p-card-subtitle {
@@ -4712,7 +4718,8 @@ nav .p-toolbar {
   background: #ffffff;
   color: #212529;
   padding: 1.25rem 1rem;
-  z-index: -2;
+  z-index: 1;
+  overflow-y: visible!important;
 }
 
 .p-dialog .p-dialog-footer {

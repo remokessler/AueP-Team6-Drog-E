@@ -1,5 +1,5 @@
 <list
-  (dialogElementChanged)="dialogUser = $event"
+  (dialogElementChanged)="dialogElementChanged($event)"
   [columnConfig]="columnConfig"
   [service]="userService"
   entityName="User"
@@ -35,12 +35,12 @@
         </span>
       </div>
     </div>
-
     <div class="row mt-4">
       <div class="col-6">
         <span class="p-float-label">
           <input [(ngModel)]="dialogUser.email"
                  id="email"
+                 pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
                  maxlength="50"
                  minlength="3"
                  name="email"
@@ -70,16 +70,18 @@
     <div class="row mt-4">
       <div class="col-12">
         <span class="p-float-label">
-          <input [(ngModel)]="dialogUser.jobDescription"
-                 id="jobDescription"
-                 maxlength="50"
-                 minlength="3"
-                 name="jobDescription"
-                 pInputText
-                 required
-                 type="text"
+          <select [(ngModel)]="dialogUser.jobDescription"
+                  [selectedIndex]="dialogUser.jobDescription"
+                  class="form-select"
+                  id="jobDescription"
+                  name="jobDescription"
+                  required
           >
-          <label for="jobDescription">Job</label>
+                      <option *ngFor="let type of jobDescriptions"
+                              [ngValue]="asNumber(type.value)"
+                      >{{type.index}}</option>
+                    </select>
+          <label for="jobDescription" style="top: -0.75rem; font-size: 12px;">Job</label>
         </span>
       </div>
     </div>

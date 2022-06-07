@@ -1,8 +1,11 @@
 import { IRobot } from '../models/robot';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ICrudService } from '../../../lib/models/crud-service';
+import { IPatient } from '../../patient-management/models/patient';
+import { Router } from '@angular/router';
+import { map } from 'rxjs/operators';
 
 
 @Injectable({
@@ -10,15 +13,19 @@ import { ICrudService } from '../../../lib/models/crud-service';
 })
 export class RobotService implements ICrudService<IRobot> {
 
-  public constructor(private readonly _httpClient: HttpClient, @Inject('BASE_URL') private readonly _baseUrl: string) {
+  public constructor(private readonly _httpClient: HttpClient, private readonly _router: Router, @Inject('BASE_URL') private readonly _baseUrl: string) {
   }
 
-  public navigate$(robot: IRobot) {
-    return of<void>();
+  public async navigate(robot: IRobot) {
+    await this._router.navigate([ `/robots/${ robot.id }` ]);
   }
 
   public get$(odataQueryString: string | undefined = undefined): Observable<IRobot[]> {
     return this._httpClient.get<IRobot[]>(this._baseUrl + 'odata/Robots' + (odataQueryString ?? ''));
+  }
+
+  public getDetail$(id: number): Observable<IRobot> {
+    return this._httpClient.get<IRobot>(`${ this._baseUrl }odata/Robots/${ id }`);
   }
 
   public create$(robot: IRobot): Observable<IRobot> {

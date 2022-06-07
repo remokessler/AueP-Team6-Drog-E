@@ -1,1 +1,37 @@
-<p>robot-dashboard works!</p>
+<div class="row">
+  <p-card header="Robot-Informations" styleClass="overflow">
+    <form #robotEdit="ngForm" *ngIf="robot$ | async as robot" class="pt-4">
+      <div class="row">
+        <div class="col-12">
+        <span class="p-float-label">
+          <input [(ngModel)]="robot.name"
+                 id="name"
+                 maxlength="50"
+                 minlength="3"
+                 name="name"
+                 pInputText
+                 required
+                 type="text"
+          >
+          <label for="name">Name</label>
+        </span>
+        </div>
+      </div>
+      <div class="row mt-4 flex-row-reverse">
+        <div class="col-auto">
+          <button (click)="saveRobot(robot)"
+                  [disabled]="robotEdit.invalid"
+                  class="p-button-text w-100"
+                  icon="pi pi-save"
+                  iconPos="left"
+                  label="Save"
+                  pButton
+          >
+
+          </button>
+        </div>
+      </div>
+    </form>
+  </p-card>
+</div>
+

@@ -12,6 +12,7 @@ public class ApplicationDbContext : DbContext
     
     // Robot
     public DbSet<Robot>? Robots { get; set; }
+    public DbSet<RobotHealthMessage>? RobotHealthMessage { get; set; }
     //Master Data
     public DbSet<Medicine>? Medicines { get; set; }
     public DbSet<Room>? Rooms { get; set; }

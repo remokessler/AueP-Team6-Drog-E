@@ -1,0 +1,151 @@
+<div class="row">
+  <p-card header="Patient-Informations" styleClass="overflow">
+    <div *ngIf="patient$ | async as patient" class="pt-4">
+      <div class="row">
+        <div class="col-6">
+        <span class="p-float-label">
+          <input [(ngModel)]="patient.firstname"
+                 id="firstName"
+                 maxlength="50"
+                 minlength="3"
+                 name="firstName"
+                 pInputText
+                 required
+                 type="text"
+          >
+          <label for="firstName">Firstname</label>
+        </span>
+        </div>
+        <div class="col-6">
+        <span class="p-float-label">
+          <input [(ngModel)]="patient.name"
+                 id="name"
+                 maxlength="50"
+                 minlength="3"
+                 name="name"
+                 pInputText
+                 required
+                 type="text"
+          >
+          <label for="name">Name</label>
+        </span>
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-6">
+        <span class="p-float-label">
+           <p-calendar [(ngModel)]="patient.birthday"
+                       [dateFormat]="'dd.mm.yy'"
+                       [maxDate]="now"
+                       [required]="true"
+                       id="birthday"
+                       inputId="birthday"
+                       name="birthday"
+           ></p-calendar>
+          <label for="firstName">Date of birth</label>
+        </span>
+        </div>
+        <div class="col-6">
+        <span class="p-float-label">
+          <input [(ngModel)]="patient.socialSecurityNumber"
+                 id="socialSecurityNumber"
+                 name="socialSecurityNumber"
+                 pInputText
+                 pattern="^[7][5][6][.][\d]{4}[.][\d]{4}[.][\d]{2}$"
+                 readonly
+                 required
+                 type="text"
+          >
+          <label for="socialSecurityNumber">Social Security Number</label>
+        </span>
+        </div>
+      </div>
+      <div class="row mt-4 flex-row-reverse">
+        <div class="col-auto">
+          <button (click)="savePatient(patient)"
+                  class="p-button-text w-100"
+                  disabled
+                  icon="pi pi-save"
+                  iconPos="left" label="Save"
+                  pButton
+          >
+
+          </button>
+        </div>
+      </div>
+    </div>
+  </p-card>
+</div>
+<div class="row mt-4">
+  <div class="col-12">
+    <list
+      (dialogElementChanged)="dialogStay = $event"
+      *ngIf="stayServiceLoaded === true"
+      [columnConfig]="columnConfig"
+      [service]="stayService"
+      [staticFilter]="'patientId eq ' + patientId"
+      entityName="Stay"
+    >
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <span class="p-float-label">
+              <input [(ngModel)]="dialogStay.reason"
+                     id="reason"
+                     maxlength="50"
+                     name="reason"
+                     pInputText
+                     required
+                     type="text"
+              >
+              <label for="reason">Reason</label>
+            </span>
+          </div>
+        </div>
+
+        <div class="row mt-4">
+          <div class="col-6">
+            <span class="p-float-label">
+               <p-calendar [(ngModel)]="dialogStay.enter"
+                           [dateFormat]="'dd.mm.yy'"
+                           [required]="true"
+                           id="enter"
+                           inputId="enter"
+                           name="enter"
+               ></p-calendar>
+              <label for="enter">Enter date</label>
+            </span>
+          </div>
+          <div class="col-6">
+            <span class="p-float-label">
+               <p-calendar [(ngModel)]="dialogStay.leave"
+                           [dateFormat]="'dd.mm.yy'"
+                           [required]="true"
+                           id="leave"
+                           inputId="leave"
+                           name="leave"
+               ></p-calendar>
+              <label for="enter">Leave date</label>
+            </span>
+          </div>
+        </div>
+
+        <div class="row mt-4">
+          <div class="col-12">
+            <span class="p-float-label">
+              <input [(ngModel)]="dialogStay.roomId"
+                     id="room"
+                     name="room"
+                     pInputText
+                     required
+                     type="number"
+              >
+              <label for="room">Room</label>
+            </span>
+          </div>
+        </div>
+      </div>
+    </list>
+  </div>
+</div>

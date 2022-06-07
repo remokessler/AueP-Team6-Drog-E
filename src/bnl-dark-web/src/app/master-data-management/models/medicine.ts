@@ -9,13 +9,13 @@ export interface IMedicine {
 
 export enum MedicineType
 {
-  Unknown = 'Unknown',
-  Capsule = 'Capsule',
-  Injection = 'Injection',
-  BandAid = 'BandAid',
-  Liquid = 'Liquid',
-  Inhaler = 'Inhaler',
-  TopicalMedicine = 'TopicalMedicine',
-  Suppository = 'Suppository',
-  Drop = 'Drop'
+  Unknown,
+  Capsule,
+  Injection,
+  BandAid,
+  Liquid,
+  Inhaler,
+  TopicalMedicine,
+  Suppository,
+  Drop
 }

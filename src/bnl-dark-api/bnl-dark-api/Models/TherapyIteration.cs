@@ -10,7 +10,9 @@ public class TherapyIteration : ITherapyIteration
     [Required]
     public Robot TreatingStaff { get; set; }
     [Required]
-    public Therapy Therapy { get; set; }
+    public Therapy PlanedTherapy { get; set; }
+    [Required]
+    public Stay Stay { get; set; }
     [Required]
     public DateTimeOffset TimeDone { get; set; }
 }
@@ -19,6 +21,7 @@ public interface ITherapyIteration : IId
 {
     public User ResponsableStaff { get; set; }
     public Robot TreatingStaff { get; set; }
-    public Therapy Therapy { get; set; }
+    public Therapy PlanedTherapy { get; set; }
+    public Stay Stay { get; set; }
     public DateTimeOffset TimeDone { get; set; }
 }

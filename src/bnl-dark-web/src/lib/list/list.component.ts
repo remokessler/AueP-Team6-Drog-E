@@ -8,7 +8,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { BehaviorSubject, Observable, of, Subject, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, take, tap } from 'rxjs/operators';
 import { QueryBuilder } from 'odata-query-builder';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -19,6 +19,7 @@ export interface IColumnConfig {
   title: string;
   field: string;
   queryType?: 'contains' | 'equal';
+  display: (field: unknown) => string;
 }
 
 @Component({
@@ -33,6 +34,8 @@ export class ListComponent<T> implements OnInit {
   public columnConfig: IColumnConfig[] | undefined;
   @Input()
   public service: ICrudService<T> | undefined;
+  @Input()
+  public staticFilter: string = '';
 
   @Output()
   public dialogElementChanged = new EventEmitter<T>();
@@ -45,13 +48,13 @@ export class ListComponent<T> implements OnInit {
   public sortField = '';
   public sortOrder = 0;
   public filter = '';
-  public filterModelChanged = new Subject<string>();
+  public filterModelChanged$ = new Subject<string>();
   public newElement: T | undefined;
   private _filterModelChangedSubscription: Subscription;
   private _showDialogSubject$ = new BehaviorSubject<boolean>(false);
 
   public constructor(private readonly _confirmationService: ConfirmationService, private readonly _messageService: MessageService, private readonly _cdr: ChangeDetectorRef) {
-    this._filterModelChangedSubscription = this.filterModelChanged.pipe(
+    this._filterModelChangedSubscription = this.filterModelChanged$.pipe(
       tap((text) => {
         this.filter = text;
       }),
@@ -87,13 +90,17 @@ export class ListComponent<T> implements OnInit {
         }
         return '';
       })?.filter(q => q !== '');
-      query = query.filter((builder) => builder.filterPhrase(containsQuery?.join(' or ') ?? ''));
+      query = query.filter((builder) => builder.filterPhrase('(' + (containsQuery?.join(' or ') ?? '') + ')' + this.staticFilter));
     }
+    else if(this.staticFilter !== '' && this.staticFilter !== undefined && this.staticFilter !== null) {
+      query = query.filter(builder => builder.filterPhrase(this.staticFilter));
+    }
+    console.log('get query', query.toQuery());
     return query.toQuery();
   }
 
   public ngOnInit(): void {
-    this.loadData();
+    this.loadData(this._oDataQuery);
   }
 
   public openDialog(element: T | undefined = undefined) {
@@ -120,7 +127,7 @@ export class ListComponent<T> implements OnInit {
   }
 
   public onRowSelect(clickedElement: T): void {
-    this.service?.navigate$({ ...clickedElement } as T);
+    this.service?.navigate({ ...clickedElement } as T);
   }
 
   public sort($event: { field: string, order: number }): void {
@@ -132,14 +139,14 @@ export class ListComponent<T> implements OnInit {
     this.loadData(this._oDataQuery);
   }
 
-  public openDeleteDialog($event: HTMLElement, item: T): void {
+  public openDeleteDialog(element: HTMLElement, item: T): void {
     this._confirmationService.confirm({
-      target: $event ?? undefined,
+      target: element ?? undefined,
       message: `Are you sure you want to delete this ${ this.entityName }?`,
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.service?.delete$(item).pipe(take(1)).subscribe(
-          () => this.loadData(),
+          () => this.loadData(this._oDataQuery),
           (error: HttpErrorResponse) => this._messageService.add({
             severity: 'error',
             summary: `Error while deleting ${ this.entityName }`,
@@ -155,15 +162,16 @@ export class ListComponent<T> implements OnInit {
   }
 
   public limit(field: any): string {
+    if (!field) {
+      return '';
+    }
     return field.toString().length < 25 ? field.toString().substring(0, 25) : field.toString() + '...';
   }
 
   private updateElement(): void {
-    console.log('update elem');
     this.service?.patch$({ ...this.newElement } as T).pipe(take(1)).subscribe(
       () => {
-        this.loadData();
-        console.log('update elem');
+        this.loadData(this._oDataQuery);
         this._showDialogSubject$.next(false);
       },
       (error: HttpErrorResponse) => this._messageService.add({
@@ -178,7 +186,7 @@ export class ListComponent<T> implements OnInit {
   private createElement(): void {
     this.service?.create$({ ...this.newElement } as T).pipe(take(1)).subscribe(
       () => {
-        this.loadData();
+        this.loadData(this._oDataQuery);
         this._showDialogSubject$.next(false);
       },
       (error: HttpErrorResponse) => this._messageService.add({

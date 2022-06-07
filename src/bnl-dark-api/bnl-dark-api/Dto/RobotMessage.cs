@@ -2,14 +2,14 @@
 
 public class RobotMessage : IRobotMessage
 {
-    public DateTimeOffset StartTime { get; set; }
+    public int OffsetToStartTimeMs { get; set; }
     public Dictionary<int, int> MedicineToPatientRoom { get; set; }
     public Dictionary<int, int> MedicinePickUp { get; set; }
 }
 
 public interface IRobotMessage
 {
-    DateTimeOffset StartTime { get; set; }
+    int OffsetToStartTimeMs { get; set; }
     // <spender> id, id patient room => sorted by delivery time
     Dictionary<int, int> MedicineToPatientRoom { get; set; }
     

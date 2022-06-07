@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { MedicineListComponent } from './medicine-list/medicine-list.component';
 import { UserListComponent } from './user-list/user-list.component';
+import { DropdownModule } from 'primeng/dropdown';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { UserListComponent } from './user-list/user-list.component';
     LibModule,
     FormsModule,
     InputNumberModule,
+    DropdownModule,
   ],
 })
 export class MasterDataManagementModule {}

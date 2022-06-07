@@ -13,9 +13,7 @@ export class UserService implements ICrudService<IUser> {
   public constructor(private readonly _httpClient: HttpClient, @Inject('BASE_URL') private readonly _baseUrl: string) {
   }
 
-  public navigate$(user: IUser) {
-    return of<void>();
-  }
+  public navigate(user: IUser) {}
 
   public get$(odataQueryString: string | undefined = undefined): Observable<IUser[]> {
     return this._httpClient.get<IUser[]>(this._baseUrl + 'odata/Users' + (odataQueryString ?? ''));

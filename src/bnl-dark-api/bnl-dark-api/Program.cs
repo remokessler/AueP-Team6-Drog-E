@@ -4,9 +4,12 @@ using Microsoft.EntityFrameworkCore;
 using bnl_dark_api.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.OData;
+using Microsoft.AspNetCore.OData.Formatter.Value;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OData.Edm;
+using Microsoft.OData.Edm.Vocabularies;
 using Microsoft.OData.ModelBuilder;
+using Microsoft.OData.UriParser;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -97,5 +100,6 @@ static IEdmModel GetEdmModel()
     builder.EntitySet<Robot>(nameof(Robot));
     builder.EntitySet<Room>(nameof(Room));
     builder.EntitySet<Medicine>(nameof(Medicine));
+    
     return builder.GetEdmModel();
 }

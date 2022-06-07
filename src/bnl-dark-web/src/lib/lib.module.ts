@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { CardModule } from 'primeng/card';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { ToastModule } from 'primeng/toast';
     FormsModule,
     ConfirmPopupModule,
     ToastModule,
+    CardModule,
   ],
   exports: [
     DialogComponent,
@@ -39,7 +41,7 @@ import { ToastModule } from 'primeng/toast';
   providers: [
     BreadcrumbService,
     ConfirmationService,
-    MessageService
+    MessageService,
   ],
 })
 export class LibModule {}

@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace bnl_dark_api.Models;
 
@@ -27,7 +29,7 @@ public interface IUser : IId
     public string FirstName { get; set; }
     public JobDescription JobDescription { get; set; } 
 }
-
+[JsonConverter(typeof(StringEnumConverter))]
 public enum JobDescription
 {
     Doctor,

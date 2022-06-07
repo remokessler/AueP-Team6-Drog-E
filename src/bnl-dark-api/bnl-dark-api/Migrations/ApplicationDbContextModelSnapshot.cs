@@ -200,6 +200,10 @@ namespace bnl_dark_api.Migrations
                     b.Property<int?>("PatientId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("RoomId")
                         .HasColumnType("int");
 
@@ -252,6 +256,9 @@ namespace bnl_dark_api.Migrations
                     b.Property<int>("ResponsableStaffId")
                         .HasColumnType("int");
 
+                    b.Property<int>("StayId")
+                        .HasColumnType("int");
+
                     b.Property<int>("TherapyId")
                         .HasColumnType("int");
 
@@ -267,6 +274,8 @@ namespace bnl_dark_api.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ResponsableStaffId");
+
+                    b.HasIndex("StayId");
 
                     b.HasIndex("TherapyId");
 
@@ -402,6 +411,12 @@ namespace bnl_dark_api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("bnl_dark_api.Models.Stay", "Stay")
+                        .WithMany()
+                        .HasForeignKey("StayId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("bnl_dark_api.Models.Therapy", "Therapy")
                         .WithMany("TherapyIterations")
                         .HasForeignKey("TherapyId")
@@ -419,6 +434,8 @@ namespace bnl_dark_api.Migrations
                         .IsRequired();
 
                     b.Navigation("ResponsableStaff");
+
+                    b.Navigation("Stay");
 
                     b.Navigation("Therapy");
 
