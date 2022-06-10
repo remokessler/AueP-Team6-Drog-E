@@ -3,6 +3,7 @@
 public class RobotMessage : IRobotMessage
 {
     public int OffsetToStartTimeMs { get; set; }
+    public int TimetableId { get; set; }
     public Dictionary<int, int> MedicineToPatientRoom { get; set; }
     public Dictionary<int, int> MedicinePickUp { get; set; }
 }

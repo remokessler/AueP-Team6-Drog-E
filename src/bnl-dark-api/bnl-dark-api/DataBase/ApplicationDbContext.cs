@@ -20,6 +20,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Patient>? Patients { get; set; }
     public DbSet<Stay>? Stays { get; set; }
     public DbSet<Therapy>? Therapies { get; set; }
+    public DbSet<TherapyIteration>? TherapyIterations { get; set; }
     public DbSet<AnamnesisRecord>? AnamnesisRecords { get; set; }
     // Users
     public DbSet<User>? Users { get; set; }

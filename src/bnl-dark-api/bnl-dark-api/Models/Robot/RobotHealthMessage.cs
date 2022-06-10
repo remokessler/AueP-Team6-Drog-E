@@ -6,7 +6,7 @@ public class RobotHealthMessage: IRobotHealthMessage
 {
     public int Id { get; set; }
     [ForeignKey(nameof(TherapyIteration))]
-    public int TherapyIterationId { get; set; }
+    public int TimeTableId { get; set; }
     public TherapyIteration TherapyIteration { get; set; }
     public RobotHealthMessageStatus RobotHealthMessageStatus { get; set; }
     public DateTimeOffset Received { get; set; }
@@ -14,7 +14,7 @@ public class RobotHealthMessage: IRobotHealthMessage
 
 public interface IRobotHealthMessage : IId
 {
-    public int TherapyIterationId { get; set; }
+    public int TimeTableId { get; set; }
     public TherapyIteration TherapyIteration { get; set; }
     public RobotHealthMessageStatus RobotHealthMessageStatus { get; set; }
     public DateTimeOffset Received { get; set; }
