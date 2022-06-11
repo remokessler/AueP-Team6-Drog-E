@@ -5,7 +5,6 @@ import { ICrudService } from '../../../lib/models/crud-service';
 import { Router } from '@angular/router';
 import { IRobotHealthMessage } from '../models/robot-health-message';
 
-
 @Injectable({
   providedIn: 'root',
 })

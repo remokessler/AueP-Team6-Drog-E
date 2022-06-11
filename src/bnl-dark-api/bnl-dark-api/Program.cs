@@ -30,7 +30,7 @@ builder.Services.AddControllers()
             .SkipToken()
             .EnableQueryFeatures(100)
     );
-
+ 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: "development", builder =>

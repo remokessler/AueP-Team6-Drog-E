@@ -12,10 +12,10 @@ namespace bnl_dark_api.Controllers;
 public class DefaultCrudController<T>: ODataController where T : class, IId
 {
     private readonly ApplicationDbContext _context;
-    private readonly DbSet<T> _dbSet;
+    private readonly DbSet<T>? _dbSet;
     private readonly ILogger _logger;
 
-    public DefaultCrudController(ILogger logger, ApplicationDbContext context, DbSet<T> dbSet)
+    public DefaultCrudController(ILogger logger, ApplicationDbContext context, DbSet<T>? dbSet)
     {
         _logger = logger;
         _context = context;

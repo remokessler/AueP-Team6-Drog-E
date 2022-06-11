@@ -9,7 +9,7 @@ namespace bnl_dark_api.Controllers;
 [Route("odata/[controller]")]
 public class RobotsController : DefaultCrudController<Robot>
 {
-    private ApplicationDbContext _ctx;
+    private readonly ApplicationDbContext _ctx;
     public RobotsController(ILogger<RobotsController> logger, ApplicationDbContext context)
         : base(logger, context, context.Robots)
     {
@@ -17,7 +17,7 @@ public class RobotsController : DefaultCrudController<Robot>
     }
 
     [HttpPost("/arduino/robot/{robotId}")]
-    public async Task<ActionResult<RobotMessage>> Get([FromRoute] int robotId)
+    public async Task<ActionResult<RobotMessage>> GetAssignment([FromRoute] int robotId)
     {
         try
         {
@@ -41,7 +41,7 @@ public class RobotsController : DefaultCrudController<Robot>
             var expandedIterations = await GetExpandedIterations(timeTableEntry);
 
             // set medicine pickup as dictionary
-            var sortedIterations = expandedIterations.OrderBy(i => i.Therapy.Medicine.Dispenser);
+            var sortedIterations = expandedIterations.OrderBy(i => i.Therapy.Medicine.Dispenser).ToList();
             var dispensers = sortedIterations.Select(i => i.Therapy.Medicine.Dispenser).ToList();
             foreach (var dispenser in dispensers)
             {
