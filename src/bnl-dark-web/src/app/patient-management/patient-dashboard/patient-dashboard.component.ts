@@ -4,7 +4,6 @@ import { ReplaySubject, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 import { PatientService } from '../services/patient.service';
 import { IPatient } from '../models/patient';
-import { IAmnesisRecord } from '../models/amnesis-record';
 import { BreadcrumbService } from '../../../lib/services/breadcrumb.service';
 import { StayService } from '../services/stay.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -20,6 +19,7 @@ import { IColumnConfig } from '../../../lib/list/list.component';
 export class PatientDashboardComponent implements OnInit, OnDestroy {
   public patientId: number | undefined;
   public dialogStay: IStay = {} as IStay;
+  public selectedStay: IStay = {} as IStay;
   public now = new Date();
   public columnConfig = [ {
       title: 'Room number',
@@ -63,7 +63,7 @@ export class PatientDashboardComponent implements OnInit, OnDestroy {
     this._route.params.pipe(takeUntil(this._destroyed$))
       .subscribe((params) => {
           this.patientId = params['patientId'] as number;
-          this._stayService.init(this.patientId);
+          this._stayService.init(this.patientId, (stay: IStay) => this.selectedStay = stay);
           this.loadPatient();
         },
       );

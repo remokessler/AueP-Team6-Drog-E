@@ -15,12 +15,8 @@ public class TherapyIteration : ITherapyIteration
     public int StayId { get; set; }
     [Required]
     public Stay Stay { get; set; }
-    
-    [ForeignKey(nameof(TimeTableEntry))]
     public int TimeTableEntryId { get; set; }
-    [Required]
     public TimeTableEntry TimeTableEntry { get; set; }
-    [Required]
     public DateTimeOffset TimeDone { get; set; }
 }
 

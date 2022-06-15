@@ -1,27 +1,29 @@
-<div class="container">
-  <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
-    <h2 class="form-signin-heading">Login</h2>
-    <div *ngIf="invalidLogin" class="alert alert-danger">Invalid username or password.</div>
-    <br />
-    <span class="p-float-label">
+<p-card>
+  <div class="container">
+    <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+      <h2 class="form-signin-heading">Login</h2>
+      <div *ngIf="invalidLogin" class="alert alert-danger">Invalid username or password.</div>
+      <br />
+      <span class="p-float-label">
       <input [(ngModel)]="credentials.username" class="form-control" id="username" name="username" pInputText
              required type="email">
       <label class="sr-only" for="username">Email address</label>
     </span>
-    <br />
-    <span class="p-float-label">
+      <br />
+      <span class="p-float-label">
       <input [(ngModel)]="credentials.password" class="form-control" id="password" name="password" pInputText
              required type="password">
       <label class="sr-only" for="password">Password</label>
     </span>
-    <br />
-    <div class="row justify-content-between justify-content-md-end">
-      <div class="col-auto">
-        <button (click)="resetPassword()" class="p-button-text" pButton type="button">Reset Password</button>
+      <br />
+      <div class="row justify-content-between justify-content-md-end">
+        <div class="col-auto">
+          <button (click)="resetPassword()" class="p-button-text" pButton type="button">Reset Password</button>
+        </div>
+        <div class="col-auto">
+          <button [disabled]="!loginForm.valid" class="p-button-outlined" pButton type="submit">Log in</button>
+        </div>
       </div>
-      <div class="col-auto">
-        <button [disabled]="!loginForm.valid" class="p-button-outlined" pButton type="submit">Log in</button>
-      </div>
-    </div>
-  </form>
-</div>
+    </form>
+  </div>
+</p-card>

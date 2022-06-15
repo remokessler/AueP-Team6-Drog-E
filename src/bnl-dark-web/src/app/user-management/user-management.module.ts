@@ -7,6 +7,7 @@ import { UserPopupComponent } from './user-popup/user-popup.component';
 import { LibModule } from '../../lib/lib.module';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { ButtonModule } from 'primeng/button';
     LibModule,
     InputTextModule,
     ButtonModule,
+    CardModule,
   ],
   exports: [ LoginComponent, CommonModule, FormsModule, ReactiveFormsModule, UserPopupComponent ],
 })

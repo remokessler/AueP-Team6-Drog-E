@@ -16,9 +16,21 @@ public class RobotsController : DefaultCrudController<Robot>
         _ctx = context;
     }
 
-    [HttpPost("/arduino/robot/{robotId}")]
+    [HttpGet("arduino/{robotId}")]
     public async Task<ActionResult<RobotMessage>> GetAssignment([FromRoute] int robotId)
     {
+        var x = new RobotMessage()
+        {
+            MedicinePickUp = new Dictionary<int, int>(),
+            MedicineToPatientRoom = new Dictionary<int, int>(),
+            OffsetToStartTimeMs = 5000,
+        };
+        x.MedicinePickUp.Add(1, 2);
+        x.MedicinePickUp.Add(2, 1);
+        x.MedicinePickUp.Add(3, 1);
+        x.MedicineToPatientRoom.Add(1, 2);
+        x.MedicineToPatientRoom.Add(2, 3);
+        return x;
         try
         {
             RobotMessage message = new RobotMessage
@@ -65,7 +77,7 @@ public class RobotsController : DefaultCrudController<Robot>
         }
     }
 
-    [HttpPost("/arduino/robot/{timetableId}/{roomId}/{status}")]
+    [HttpPost("arduino/{timetableId}/{roomId}/{status}")]
     public async Task<ActionResult> PostStatus([FromRoute]int timetableId, [FromRoute]int roomId, [FromRoute]int status)
     {
         try

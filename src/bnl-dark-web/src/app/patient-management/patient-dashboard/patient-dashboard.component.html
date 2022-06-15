@@ -77,7 +77,18 @@
     </div>
   </p-card>
 </div>
-<div class="row mt-4">
+<div class="row mt-2">
+  <div class="p-element">
+    <div class="overflow p-card p-component">
+      <div class="p-card-body">
+        <div class="p-card-title">
+          Stay {{selectedStay.enter}} - {{selectedStay.leave}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row mt-2">
   <div class="col-12">
     <list
       (dialogElementChanged)="dialogStay = $event"
@@ -126,7 +137,7 @@
                            inputId="leave"
                            name="leave"
                ></p-calendar>
-              <label for="enter">Leave date</label>
+              <label for="enter">Planed leave date</label>
             </span>
           </div>
         </div>

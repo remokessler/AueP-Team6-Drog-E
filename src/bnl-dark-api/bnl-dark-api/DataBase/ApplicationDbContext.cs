@@ -31,7 +31,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Audit> AuditLogs { get; set; }
     public virtual async Task<int> SaveChangesAsync(string userId = null)
     {
-        OnBeforeSaveChanges(userId);
+        OnBeforeSaveChanges("remo.kessler@bnl.ch");
         var result = await base.SaveChangesAsync();
         return result;
     }

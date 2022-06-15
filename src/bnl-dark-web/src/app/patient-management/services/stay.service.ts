@@ -11,18 +11,24 @@ import { Router } from '@angular/router';
 })
 export class StayService implements ICrudService<IStay> {
   private _patientId: number | undefined;
+  private _onSelect: ((stay: IStay) => void) | undefined;
   public constructor(private readonly _httpClient: HttpClient, private readonly _router: Router, @Inject('BASE_URL') private readonly _baseUrl: string) {
   }
 
-  public init(id: number) {
+  public init(id: number, select: (stay: IStay) => void) {
     this._patientId = id;
+    this._onSelect = select;
   }
 
   public get isLoaded() {
     return this._patientId !== undefined;
   }
 
-  public async navigate() {}
+  public async navigate(stay: IStay) {
+    if (this._onSelect) {
+      this._onSelect(stay);
+    }
+  }
 
   public get$(odataQueryString: string | undefined = undefined): Observable<IStay[]> {
     return this._httpClient.get<IStay[]>(this._baseUrl + 'odata/Stays' + (odataQueryString ?? ''));
