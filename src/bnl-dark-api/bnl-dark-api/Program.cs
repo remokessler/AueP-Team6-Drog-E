@@ -4,12 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using bnl_dark_api.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.OData;
-using Microsoft.AspNetCore.OData.Formatter.Value;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OData.Edm;
-using Microsoft.OData.Edm.Vocabularies;
 using Microsoft.OData.ModelBuilder;
-using Microsoft.OData.UriParser;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,7 +32,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: "development", builder =>
     {
-        builder.WithOrigins("*", "https://localhost:44456")
+        builder.WithOrigins("*", "https://localhost:44456", "http://10.100.206.40", "*/*")
             .AllowAnyMethod()
             .AllowAnyHeader()
             .SetIsOriginAllowed(origin => true)
