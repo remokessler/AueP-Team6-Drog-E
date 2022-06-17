@@ -5,7 +5,6 @@ import { HttpClient } from '@angular/common/http';
 import { ICrudService } from '../../../lib/models/crud-service';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { IAmnesisRecord } from '../models/amnesis-record';
 
 
 @Injectable({

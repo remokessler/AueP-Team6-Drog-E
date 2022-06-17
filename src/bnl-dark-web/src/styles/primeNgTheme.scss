@@ -2491,14 +2491,14 @@ p-treeselect.ng-invalid.ng-dirty > .p-treeselect {
 }
 
 .p-button.p-button-link {
-  color: #007bff;
+  color: $primary;
   background: transparent;
   border: transparent;
 }
 
 .p-button.p-button-link:enabled:hover {
   background: transparent;
-  color: #0069d9;
+  color: darken($primary, 10%);
   border-color: transparent;
 }
 
@@ -2514,7 +2514,7 @@ p-treeselect.ng-invalid.ng-dirty > .p-treeselect {
 
 .p-button.p-button-link:enabled:active {
   background: transparent;
-  color: #007bff;
+  color: darken($primary, 10%);
   border-color: transparent;
 }
 

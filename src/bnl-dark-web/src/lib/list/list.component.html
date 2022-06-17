@@ -1,28 +1,41 @@
-<p-card>
-  <div *ngIf="data$ | async as data; else loading" class="row">
-    <p-table (onSort)="sort($event)"
-             [sortField]="sortField"
-             [sortOrder]="sortOrder"
-             [value]="data"
-             class="col-12"
-             dataKey="id"
-             id="crud-table"
-             selectionMode="single"
-             styleClass="p-datatable-striped"
-    >
-      <ng-template pTemplate="caption">
-        <div class="table-actions row justify-content-between" style="margin-bottom: 4px">
-          <div class="col col-auto">
-            <button (click)="openDialog()"
-                    [label]="'New ' + entityName"
-                    class="p-button-text"
-                    icon="pi pi-check"
-                    iconPos="left"
-                    pButton
-                    style="margin-right: 8px"
-            ></button>
+<div class="p-element">
+  <div class="overflow p-card p-component">
+    <div class="p-card-body">
+      <div *ngIf="title !== ''" class="p-card-title">
+        <div class="row">
+          <div class="col-auto">
+            <button (click)="backAction.emit()" class="p-button-rounded p-button-link" icon="pi pi-angle-left" pButton type="button">
+            </button>
           </div>
-          <div class="col">
+          <div class="col" style="padding-left: 0;">
+            <span>{{title}}</span>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="data$ | async as data; else loading" class="row">
+        <p-table (onSort)="sort($event)"
+                 [sortField]="sortField"
+                 [sortOrder]="sortOrder"
+                 [value]="data"
+                 class="col-12"
+                 dataKey="id"
+                 id="crud-table"
+                 selectionMode="single"
+                 styleClass="p-datatable-striped"
+        >
+          <ng-template pTemplate="caption">
+            <div class="table-actions row justify-content-between" style="margin-bottom: 4px">
+              <div class="col col-auto">
+                <button (click)="openDialog()"
+                        [label]="'New ' + entityName"
+                        class="p-button-text"
+                        icon="pi pi-check"
+                        iconPos="left"
+                        pButton
+                        style="margin-right: 8px"
+                ></button>
+              </div>
+              <div class="col">
             <span class="p-input-icon-left">
                 <i class="pi pi-search"></i>
                 <input #searchField
@@ -33,67 +46,67 @@
                        type="text"
                 />
             </span>
-          </div>
-        </div>
-      </ng-template>
-      <ng-template pTemplate="header">
-        <tr>
-          <th *ngFor="let col of columnConfig; let last = last"
-              [attr.colspan]="last === true ? 2 : 1"
-              [pSortableColumn]="col.title"
-              style="display:table-cell!important"
-          >
-            {{ col.title}}
-            <p-sortIcon field="{{col.title}}"></p-sortIcon>
-          </th>
-        </tr>
-      </ng-template>
-      <ng-template let-item pTemplate="body">
-        <tr (click)="onRowSelect(item)">
-          <td *ngFor="let col of columnConfig">
-            <span *ngIf="col.display; else noFunc">{{limit(col.display(item[col.field]))}}</span>
-            <ng-template #noFunc>{{limit(item[col.field])}}</ng-template>
-          </td>
-          <td class="edit-column">
-            <button (click)="openDialog(item); $event.stopPropagation()"
-                    class="p-button-text p-button-rounded p-button-icon-only"
-                    icon="pi pi-pencil"
-                    pButton
-            ></button>
-            <button #deleteButton (click)="openDeleteDialog(deleteButton, item); $event.stopPropagation()"
-                    class="p-button-text p-button-rounded p-button-icon-only"
-                    icon="pi pi-trash"
-                    pButton
-            ></button>
-            <p-confirmPopup [hideTransitionOptions]="'60ms'" [showTransitionOptions]="'60ms'"></p-confirmPopup>
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
-  </div>
+              </div>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th *ngFor="let col of columnConfig; let last = last"
+                  [attr.colspan]="last === true ? 2 : 1"
+                  [pSortableColumn]="col.title"
+                  style="display:table-cell!important"
+              >
+                {{ col.title}}
+                <p-sortIcon field="{{col.title}}"></p-sortIcon>
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template let-item pTemplate="body">
+            <tr (click)="onRowSelect(item)">
+              <td *ngFor="let col of columnConfig">
+                <span *ngIf="col.display; else noFunc">{{limit(col.display(item[col.field]))}}</span>
+                <ng-template #noFunc>{{limit(item[col.field])}}</ng-template>
+              </td>
+              <td class="edit-column">
+                <button (click)="openDialog(item); $event.stopPropagation()"
+                        class="p-button-text p-button-rounded p-button-icon-only"
+                        icon="pi pi-pencil"
+                        pButton
+                ></button>
+                <button #deleteButton (click)="openDeleteDialog(deleteButton, item); $event.stopPropagation()"
+                        class="p-button-text p-button-rounded p-button-icon-only"
+                        icon="pi pi-trash"
+                        pButton
+                ></button>
+                <p-confirmPopup [hideTransitionOptions]="'60ms'" [showTransitionOptions]="'60ms'"></p-confirmPopup>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
 
-  <ng-template #loading>
-    <p-table [sortField]="sortField"
-             [sortOrder]="sortOrder"
-             [value]="[1,2,3,4,5,6,7,8,9,10]"
-             class="col-12"
-             dataKey="id"
-             selectionMode="single"
-             styleClass="p-datatable-striped"
-    >
-      <ng-template pTemplate="caption">
-        <div class="table-actions row justify-content-between" style="margin-bottom: 4px">
-          <div class="col col-auto">
-            <button [label]="'New ' + entityName"
-                    class="p-button-text"
-                    disabled
-                    icon="pi pi-check"
-                    iconPos="left"
-                    pButton
-                    style="margin-right: 8px"
-            ></button>
-          </div>
-          <div class="col">
+      <ng-template #loading>
+        <p-table [sortField]="sortField"
+                 [sortOrder]="sortOrder"
+                 [value]="[1,2,3,4,5,6,7,8,9,10]"
+                 class="col-12"
+                 dataKey="id"
+                 selectionMode="single"
+                 styleClass="p-datatable-striped"
+        >
+          <ng-template pTemplate="caption">
+            <div class="table-actions row justify-content-between" style="margin-bottom: 4px">
+              <div class="col col-auto">
+                <button [label]="'New ' + entityName"
+                        class="p-button-text"
+                        disabled
+                        icon="pi pi-check"
+                        iconPos="left"
+                        pButton
+                        style="margin-right: 8px"
+                ></button>
+              </div>
+              <div class="col">
             <span class="p-input-icon-left">
                 <i class="pi pi-search"></i>
                 <input [ngModel]="filter"
@@ -102,34 +115,36 @@
                        type="text"
                 />
             </span>
-          </div>
-        </div>
+              </div>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th *ngFor="let col of columnConfig; let last = last"
+                  [attr.colspan]="last === true ? 2 : 1"
+                  [pSortableColumn]="col.title"
+                  style="display:table-cell!important"
+              >
+                {{col.title}}
+                <p-sortIcon field="{{col.title}}"></p-sortIcon>
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template let-item pTemplate="body">
+            <tr (click)="onRowSelect(item)">
+              <td *ngFor="let col of columnConfig">
+                <p-skeleton></p-skeleton>
+              </td>
+              <td class="edit-column">
+                <p-skeleton></p-skeleton>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
       </ng-template>
-      <ng-template pTemplate="header">
-        <tr>
-          <th *ngFor="let col of columnConfig; let last = last"
-              [attr.colspan]="last === true ? 2 : 1"
-              [pSortableColumn]="col.title"
-              style="display:table-cell!important"
-          >
-            {{col.title}}
-            <p-sortIcon field="{{col.title}}"></p-sortIcon>
-          </th>
-        </tr>
-      </ng-template>
-      <ng-template let-item pTemplate="body">
-        <tr (click)="onRowSelect(item)">
-          <td *ngFor="let col of columnConfig">
-            <p-skeleton></p-skeleton>
-          </td>
-          <td class="edit-column">
-            <p-skeleton></p-skeleton>
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
-  </ng-template>
-</p-card>
+    </div>
+  </div>
+</div>
 <p-toast [hideTransitionOptions]="'150ms'"
          [preventOpenDuplicates]="true"
          [showTransitionOptions]="'150ms'"

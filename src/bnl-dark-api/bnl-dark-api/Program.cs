@@ -27,10 +27,10 @@ builder.Services.AddControllers()
             .SkipToken()
             .EnableQueryFeatures(100)
     );
- 
+
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: "development", builder =>
+    options.AddPolicy("development", builder =>
     {
         builder.WithOrigins("*", "https://localhost:44456", "http://10.100.206.40", "*/*")
             .AllowAnyMethod()

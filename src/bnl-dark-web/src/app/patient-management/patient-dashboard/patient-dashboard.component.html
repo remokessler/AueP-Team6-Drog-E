@@ -1,6 +1,6 @@
 <div class="row">
   <p-card header="Patient-Informations" styleClass="overflow">
-    <div *ngIf="patient$ | async as patient" class="pt-4">
+    <form #form="ngForm" *ngIf="patient$ | async as patient" class="pt-4">
       <div class="row">
         <div class="col-6">
         <span class="p-float-label">
@@ -63,37 +63,96 @@
       </div>
       <div class="row mt-4 flex-row-reverse">
         <div class="col-auto">
-          <button (click)="savePatient(patient)"
+          <button (click)="savePatient(patient); form.form.markAsPristine()"
                   class="p-button-text w-100"
-                  disabled
+                  [disabled]="!form.dirty"
                   icon="pi pi-save"
                   iconPos="left" label="Save"
                   pButton
-          >
-
-          </button>
+          ></button>
         </div>
       </div>
-    </div>
+    </form>
   </p-card>
 </div>
-<div class="row mt-2">
-  <div class="p-element">
-    <div class="overflow p-card p-component">
-      <div class="p-card-body">
-        <div class="p-card-title">
-          Stay {{selectedStay.enter}} - {{selectedStay.leave}}
+<div *ngIf="selectedStay" class="row mt-2">
+  <div class="col-12">
+    <list
+      (backAction)="selectedStay = undefined"
+      (dialogElementChanged)="dialogTherapy = $event"
+      *ngIf="therapyServiceLoaded === true"
+      [columnConfig]="columnConfigTherapies"
+      [service]="therapyService"
+      [staticFilter]="'stayId eq ' + selectedStay.id"
+      [title]="'Stay ' + (selectedStay.enter | date:'d.M.yy') + ' - ' + (selectedStay.leave | date:'d.M.yy')"
+      entityName="Therapy"
+    >
+      <div class="container">
+        <div class="row">
+          <div class="col-6">
+            <span class="p-float-label">
+              <p-inputNumber [(ngModel)]="dialogTherapy.medicineId"
+                             [max]="4" [min]="1"
+                             [required]="true"
+                             id="medicine"
+                             locale="de-CH"
+                             mode="decimal"
+                             name="medicine"
+              ></p-inputNumber>
+              <label for="medicine">Medicine</label>
+            </span>
+          </div>
+          <div class="col-6">
+            <span class="p-float-label">
+              <p-inputNumber [(ngModel)]="dialogTherapy.medicineAmountPerIteration"
+                             [min]="1"
+                             [required]="true"
+                             id="medicineAmountPerIteration"
+                             locale="de-CH"
+                             mode="decimal"
+                             name="medicineAmountPerIteration"
+              ></p-inputNumber>
+              <label for="medicineAmountPerIteration">Amount per iteration</label>
+            </span>
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="col-6">
+            <span class="p-float-label">
+              <input [(ngModel)]="dialogTherapy.timesDone"
+                     [readonly]="true"
+                     pInputText
+                     type="number"
+                     id="timesDone"
+                     name="timesDone"
+              />
+              <label for="timesDone">Times done</label>
+            </span>
+          </div>
+          <div class="col-6">
+            <span class="p-float-label">
+              <p-inputNumber [(ngModel)]="dialogTherapy.totalTimesToBeHealed"
+                             [min]="1"
+                             [required]="true"
+                             id="totalTimesToBeHealed"
+                             locale="de-CH"
+                             mode="decimal"
+                             name="totalTimesToBeHealed"
+              ></p-inputNumber>
+              <label for="totalTimesToBeHealed">Times to be done</label>
+            </span>
+          </div>
         </div>
       </div>
-    </div>
+    </list>
   </div>
 </div>
-<div class="row mt-2">
+<div *ngIf="!selectedStay" class="row mt-2">
   <div class="col-12">
     <list
       (dialogElementChanged)="dialogStay = $event"
       *ngIf="stayServiceLoaded === true"
-      [columnConfig]="columnConfig"
+      [columnConfig]="columnConfigStays"
       [service]="stayService"
       [staticFilter]="'patientId eq ' + patientId"
       entityName="Stay"

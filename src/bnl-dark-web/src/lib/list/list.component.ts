@@ -36,7 +36,11 @@ export class ListComponent<T> implements OnInit {
   public service: ICrudService<T> | undefined;
   @Input()
   public staticFilter: string = '';
+  @Input()
+  public title: string = '';
 
+  @Output()
+  public backAction = new EventEmitter();
   @Output()
   public dialogElementChanged = new EventEmitter<T>();
 

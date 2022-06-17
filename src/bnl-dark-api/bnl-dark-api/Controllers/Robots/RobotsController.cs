@@ -19,18 +19,18 @@ public class RobotsController : DefaultCrudController<Robot>
     [HttpGet("arduino/{robotId}")]
     public async Task<ActionResult<RobotMessage>> GetAssignment([FromRoute] int robotId)
     {
-        var x = new RobotMessage()
-        {
-            MedicinePickUp = new Dictionary<int, int>(),
-            MedicineToPatientRoom = new Dictionary<int, int>(),
-            OffsetToStartTimeMs = 5000,
-        };
-        x.MedicinePickUp.Add(1, 2);
-        x.MedicinePickUp.Add(2, 1);
-        x.MedicinePickUp.Add(3, 1);
-        x.MedicineToPatientRoom.Add(1, 2);
-        x.MedicineToPatientRoom.Add(2, 3);
-        return x;
+        // var x = new RobotMessage()
+        // {
+        //     MedicinePickUp = new Dictionary<int, int>(),
+        //     MedicineToPatientRoom = new Dictionary<int, int>(),
+        //     OffsetToStartTimeMs = 5000,
+        // };
+        // x.MedicinePickUp.Add(1, 2);
+        // x.MedicinePickUp.Add(2, 1);
+        // x.MedicinePickUp.Add(3, 1);
+        // x.MedicineToPatientRoom.Add(1, 2);
+        // x.MedicineToPatientRoom.Add(2, 3);
+        // return x;
         try
         {
             RobotMessage message = new RobotMessage
@@ -66,7 +66,7 @@ public class RobotsController : DefaultCrudController<Robot>
             // set medicine to patient as dictionary
             foreach (var si in sortedIterations)
             {
-                message.MedicineToPatientRoom.Add(si.Therapy.Medicine.Dispenser, si.Stay.Room.Number);
+                message.MedicineToPatientRoom.Add(si.Therapy.Medicine.Dispenser, si.Therapy.Stay.Room.Number);
             }
             
             return message;
@@ -173,14 +173,14 @@ public class RobotsController : DefaultCrudController<Robot>
                 throw new NullReferenceException();
             // get stay from iterations
             var stay = await _ctx.Stays!
-                .Where(stay => stay.Id == iteration.StayId)
+                .Where(stay => stay.Id == therapy.StayId)
                 .FirstOrDefaultAsync();
             if (stay == null)
                 throw new NullReferenceException();
 
             therapy.Medicine = medicine;
+            therapy.Stay = stay;
             iteration.Therapy = therapy;
-            iteration.Stay = stay;
             expandedIterations.Add(iteration);
         }
 
