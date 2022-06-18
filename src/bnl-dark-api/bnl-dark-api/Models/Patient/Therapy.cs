@@ -14,12 +14,11 @@ public class Therapy : ITherapy
     public int MedicineAmountPerIteration { get; set; }
     [ForeignKey(nameof(Medicine))]
     public int MedicineId { get; set; }
-    public Medicine Medicine { get; set; }
+    public Medicine? Medicine { get; set; }
     
     [ForeignKey(nameof(Stay))]
     public int StayId { get; set; }
-    [Required]
-    public Stay Stay { get; set; }
+    public Stay? Stay { get; set; }
     public IEnumerable<TherapyIteration>? TherapyIterationsPlaned { get; set; }
 }
 
