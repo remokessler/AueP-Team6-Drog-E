@@ -14,10 +14,10 @@ public class Stay : IStay
     public string Reason { get; set; }
     [ForeignKey(nameof(Room))]
     public int RoomId { get; set; }
-    public Room Room { get; set; }
+    public Room? Room { get; set; }
     [ForeignKey(nameof(Patient))]
     public int PatientId { get; set; }
-    public Patient Patient { get; set; }
+    public Patient? Patient { get; set; }
 }
 
 public interface IStay: IId

@@ -55,16 +55,19 @@ export class PatientDashboardComponent implements OnInit, OnDestroy {
       title: 'Times done',
       field: 'timesDone',
       queryType: 'equal',
+      display: (field:any) => field.toString()
     },
     {
       title: 'Times required',
       field: 'totalTimesToBeHealed',
       queryType: 'equal',
+      display: (field:any) => field.toString()
     },
     {
       title: 'Amount per Unit',
       field: 'medicineAmountPerIteration',
-      queryType: 'equal'
+      queryType: 'equal',
+      display: (field:any) => field.toString()
     }
   ] as IColumnConfig[];
 

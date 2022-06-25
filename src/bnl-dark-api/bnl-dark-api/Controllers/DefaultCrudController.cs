@@ -1,4 +1,5 @@
-﻿using bnl_dark_api.DataBase;
+﻿using System.Linq;
+using bnl_dark_api.DataBase;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Deltas;
 using Microsoft.AspNetCore.OData.Formatter;
@@ -11,9 +12,9 @@ namespace bnl_dark_api.Controllers;
 
 public class DefaultCrudController<T>: ODataController where T : class, IId
 {
-    private readonly ApplicationDbContext _context;
-    private readonly DbSet<T>? _dbSet;
-    private readonly ILogger _logger;
+    protected readonly ApplicationDbContext _context;
+    protected readonly DbSet<T>? _dbSet;
+    protected readonly ILogger _logger;
 
     public DefaultCrudController(ILogger logger, ApplicationDbContext context, DbSet<T>? dbSet)
     {

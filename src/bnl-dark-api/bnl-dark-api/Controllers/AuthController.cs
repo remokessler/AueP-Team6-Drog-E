@@ -3,9 +3,11 @@ using System.Net;
 using System.Net.Mail;
 using System.Security.Claims;
 using System.Text;
+using bnl_dark_api.DataBase;
 using bnl_dark_api.Dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 namespace bnl_dark_api.Controllers;
@@ -14,15 +16,43 @@ namespace bnl_dark_api.Controllers;
 [ApiController]
 public class AuthController : ControllerBase
 {
+    private readonly ApplicationDbContext _ctx;
+    public AuthController(ILogger<AuthController> logger, ApplicationDbContext context)
+    {
+        _ctx = context;
+    }
+    
     [HttpPost("login")]
-    public IActionResult Login([FromBody] LoginModel user)
+    public async Task<IActionResult> Login([FromBody] LoginModel user)
     {
         if (user is null)
         {
             return BadRequest("Invalid client request");
         }
-
-        if (user.UserName == "test" && user.Password == "test")
+        
+        var dbUser = await _ctx.Users.FirstOrDefaultAsync((u => u.Email == user.UserName));
+        if (dbUser.Password == user.Password)
+        {
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.Email, dbUser.Email),
+                new Claim(ClaimTypes.NameIdentifier, dbUser.Id.ToString()),
+            };
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var token = new JwtSecurityToken(
+                issuer: "bnl_dark_api",
+                audience: "bnl_dark_api",
+                claims: claims,
+                expires: DateTime.Now.AddMinutes(30),
+                signingCredentials: creds
+            );
+            return Ok(new
+            {
+                token = new JwtSecurityTokenHandler().WriteToken(token),
+                expiration = token.ValidTo
+            });
+        }
         {
             var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("drog-e@supersecret"));
             var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
@@ -41,8 +71,6 @@ public class AuthController : ControllerBase
 
             return Ok(new AuthResponse { Token = tokenString });
         }
-
-        return Unauthorized();
     }
 
     [HttpPost("resetpassword")]

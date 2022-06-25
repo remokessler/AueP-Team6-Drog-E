@@ -1,0 +1,34 @@
+@use "src/styles/variables.scss";
+.card-height {
+  height: 250px;
+}
+
+.card-text {
+  text-align: center;
+}
+
+.card-title {
+  text-align: center;
+  color: var(--bg-secondary)!important;
+}
+
+.card-img-top {
+  filter: grayscale(100%);
+  transition: filter 0.45s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+
+  .card-img-top {
+    filter: grayscale(0%);
+  }
+}
+
+.card {
+  transition: transform 0.45s;
+  height: 100%
+}
+a {
+  color: inherit;
+}

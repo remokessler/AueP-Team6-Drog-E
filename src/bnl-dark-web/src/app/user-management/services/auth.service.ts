@@ -19,7 +19,10 @@ export class AuthService {
   }
 
   public get userEmail(): Observable<string> {
-    return AuthService._tokenSubject$.pipe(map(token => this._jwtHelper.decodeToken(token?.toString())['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress']));
+    return AuthService._tokenSubject$.pipe(map(token => {
+      const name = this._jwtHelper.decodeToken(token?.toString())['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'];
+      return name?.substring(0, name.indexOf('@')).replace('.', ' ') ?? '';
+    }));
   }
 
   public login(credentials: any) {

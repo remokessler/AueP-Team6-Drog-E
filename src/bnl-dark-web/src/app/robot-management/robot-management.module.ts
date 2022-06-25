@@ -8,6 +8,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { LibModule } from '../../lib/lib.module';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { CalendarModule } from 'primeng/calendar';
+import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,8 @@ import { CardModule } from 'primeng/card';
     LibModule,
     ButtonModule,
     CardModule,
+    CalendarModule,
+    TooltipModule,
   ],
   providers: [
     RobotService,

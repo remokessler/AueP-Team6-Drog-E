@@ -1,37 +1,181 @@
 <div class="row">
-  <p-card header="Robot-Informations" styleClass="overflow">
-    <form #robotEdit="ngForm" *ngIf="robot$ | async as robot" class="pt-4">
-      <div class="row">
-        <div class="col-12">
-        <span class="p-float-label">
-          <input [(ngModel)]="robot.name"
-                 id="name"
-                 maxlength="50"
-                 minlength="3"
-                 name="name"
-                 pInputText
-                 required
-                 type="text"
-          >
-          <label for="name">Name</label>
-        </span>
+  <div class="col-12">
+    <p-card header="Robot-Informations" styleClass="overflow">
+      <form #robotEdit="ngForm" *ngIf="robot$ | async as robot" class="pt-4">
+        <div class="row">
+          <div class="col-12">
+            <span class="p-float-label">
+              <input [(ngModel)]="robot.name"
+                     id="name"
+                     maxlength="50"
+                     minlength="3"
+                     name="name"
+                     pInputText
+                     required
+                     type="text"
+              >
+              <label for="name">Name</label>
+            </span>
+          </div>
         </div>
-      </div>
-      <div class="row mt-4 flex-row-reverse">
-        <div class="col-auto">
-          <button (click)="saveRobot(robot)"
-                  [disabled]="robotEdit.invalid"
-                  class="p-button-text w-100"
-                  icon="pi pi-save"
-                  iconPos="left"
-                  label="Save"
-                  pButton
-          >
-
-          </button>
+        <div class="row mt-4 flex-row-reverse">
+          <div class="col-auto">
+            <button (click)="saveRobot(robot)"
+                    [disabled]="!robotEdit.form.dirty"
+                    class="p-button-text w-100"
+                    icon="pi pi-save"
+                    iconPos="left"
+                    label="Save"
+                    pButton
+            ></button>
+          </div>
         </div>
-      </div>
-    </form>
-  </p-card>
+      </form>
+    </p-card>
+  </div>
 </div>
-
+<div class="row mt-2">
+  <div class="col-12">
+    <p-card>
+      <div class="row">
+        <div class="col">
+          <p-calendar [(ngModel)]="selectedDay"
+                      [dateFormat]="'dd.mm.yy'"
+                      [touchUI]="true"
+                      styleClass="w-100"
+          ></p-calendar>
+        </div>
+      </div>
+      <form #timeForm="ngForm" *ngFor="let entryRow of (timeTableEntries$ | async)" class="row">
+        <div class="col-3 col-md-2 mt-1" style="display:flex; flex-direction: column; justify-content: center;">
+          <b *ngIf="(entryRow.time | date: 'mm') === '00'; else notBold" style="display:flex;">
+            {{ entryRow.time | date:'HH:mm' }}
+          </b>
+          <ng-template #notBold>
+            <span style="margin-left: 12px; display:flex;">{{ entryRow.time | date:'HH:mm' }}</span>
+          </ng-template>
+        </div>
+        <div class="col-9 col-md-10">
+          <div class="row">
+            <div class="col-6 col-md-3 mt-1">
+              <span class="p-float-label">
+                <select (change)="updateTherapyIteration(entryRow, 0, $event)"
+                        *ngIf="selectedDay < entryRow.time; else readonlyInput"
+                        [selectedIndex]="ensureNotNull(entryRow, 0)"
+                        class="form-select"
+                        id="therapyIteration1"
+                        name="therapyIteration1"
+                        pTooltip="{{getTherapyDisplay(isFilled(entryRow, 0) ? entryRow.entry.therapyIterations[0].therapy : undefined)}}"
+                >
+                  <option *ngIf="isFilled(entryRow,0)" [value]="entryRow.entry.therapyIterations[0].therapy.id">
+                    {{getTherapyDisplay(entryRow.entry.therapyIterations[0].therapy)}}
+                  </option>
+                  <option [value]="undefined"></option>
+                  <option *ngFor="let therapy of dropDownTherapies$ | async"
+                          [ngValue]="therapy.id"
+                  >{{getTherapyDisplay(therapy)}}</option>
+                </select>
+                <ng-template #readonlyInput>
+                  <input
+                    [value]="getTherapyDisplay(isFilled(entryRow,0) ? entryRow.entry.therapyIterations[0].therapy : undefined)"
+                    class="form-control"
+                    pTooltip="{{getTherapyDisplay(isFilled(entryRow,0) ? entryRow.entry.therapyIterations[0].therapy : undefined)}}"
+                    readonly
+                    type="text"
+                  />
+                </ng-template>
+              </span>
+            </div>
+            <div class="col-6 col-md-3 mt-1">
+              <span class="p-float-label">
+                <select (change)="updateTherapyIteration(entryRow, 1, $event)"
+                        *ngIf="selectedDay < entryRow.time; else readonlyInput"
+                        [selectedIndex]="ensureNotNull(entryRow, 1)"
+                        class="form-select"
+                        id="therapyIteration2"
+                        name="therapyIteration2"
+                        pTooltip="{{getTherapyDisplay(isFilled(entryRow, 1) ? entryRow.entry.therapyIterations[1].therapy : undefined)}}"
+                >
+                  <option *ngIf="isFilled(entryRow,1)" [value]="entryRow.entry.therapyIterations[1].therapy.id">
+                    {{getTherapyDisplay(entryRow.entry.therapyIterations[1].therapy)}}
+                  </option>
+                  <option [value]="undefined"></option>
+                  <option *ngFor="let therapy of dropDownTherapies$ | async"
+                          [ngValue]="therapy.id"
+                  >{{getTherapyDisplay(therapy)}}</option>
+                </select>
+                <ng-template #readonlyInput>
+                  <input
+                    [value]="getTherapyDisplay(isFilled(entryRow,1) ? entryRow.entry.therapyIterations[1].therapy : undefined)"
+                    class="form-control"
+                    pTooltip="{{getTherapyDisplay(isFilled(entryRow,1) ? entryRow.entry.therapyIterations[1].therapy : undefined)}}"
+                    readonly
+                    type="text"
+                  />
+                </ng-template>
+              </span>
+            </div>
+            <div class="col-6 col-md-3 mt-1">
+              <span class="p-float-label">
+                <select (change)="updateTherapyIteration(entryRow, 2, $event)"
+                        *ngIf="selectedDay < entryRow.time; else readonlyInput"
+                        [selectedIndex]="ensureNotNull(entryRow, 2)"
+                        class="form-select"
+                        id="therapyIteration3"
+                        name="therapyIteration3"
+                        pTooltip="{{getTherapyDisplay(isFilled(entryRow, 2) ? entryRow.entry.therapyIterations[2].therapy : undefined)}}"
+                >
+                  <option *ngIf="isFilled(entryRow,2)" [value]="entryRow.entry.therapyIterations[2].therapy.id">
+                    {{getTherapyDisplay(entryRow.entry.therapyIterations[2].therapy)}}
+                  </option>
+                  <option [value]="undefined"></option>
+                  <option *ngFor="let therapy of dropDownTherapies$ | async"
+                          [ngValue]="therapy.id"
+                  >{{getTherapyDisplay(therapy)}}</option>
+                </select>
+                <ng-template #readonlyInput>
+                  <input
+                    [value]="getTherapyDisplay(isFilled(entryRow,2) ? entryRow.entry.therapyIterations[2].therapy : undefined)"
+                    class="form-control"
+                    pTooltip="{{getTherapyDisplay(isFilled(entryRow,2) ? entryRow.entry.therapyIterations[2].therapy : undefined)}}"
+                    readonly
+                    type="text"
+                  />
+                </ng-template>
+              </span>
+            </div>
+            <div class="col-6 col-md-3 mt-1">
+              <span class="p-float-label">
+                <select (change)="updateTherapyIteration(entryRow, 3, $event)"
+                        *ngIf="selectedDay < entryRow.time; else readonlyInput"
+                        [selectedIndex]="ensureNotNull(entryRow, 3)"
+                        class="form-select"
+                        id="therapyIteration4"
+                        name="therapyIteration4"
+                        pTooltip="{{getTherapyDisplay(isFilled(entryRow, 3) ? entryRow.entry.therapyIterations[3].therapy : undefined)}}"
+                >
+                  <option *ngIf="isFilled(entryRow,3)" [value]="entryRow.entry.therapyIterations[3].therapy.id">
+                    {{getTherapyDisplay(entryRow.entry.therapyIterations[3].therapy)}}
+                  </option>
+                  <option [value]="undefined"></option>
+                  <option *ngFor="let therapy of dropDownTherapies$ | async"
+                          [ngValue]="therapy.id"
+                  >{{getTherapyDisplay(therapy)}}</option>
+                </select>
+                <ng-template #readonlyInput>
+                  <input
+                    [value]="getTherapyDisplay(isFilled(entryRow,3) ? entryRow.entry.therapyIterations[3].therapy : undefined)"
+                    class="form-control"
+                    pTooltip="{{getTherapyDisplay(isFilled(entryRow,3) ? entryRow.entry.therapyIterations[3].therapy : undefined)}}"
+                    readonly
+                    type="text"
+                  />
+                </ng-template>
+              </span>
+            </div>
+          </div>
+        </div>
+      </form>
+    </p-card>
+  </div>
+</div>

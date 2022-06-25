@@ -24,6 +24,7 @@ import { CardModule } from 'primeng/card';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { MasterDataManagementModule } from './master-data-management/master-data-management.module';
 import { PatientManagementModule } from './patient-management/patient-management.module';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
 
 export function tokenGetter() {
   return localStorage.getItem('jwt');
@@ -56,17 +57,18 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        allowedDomains: [ 'localhost:44456' ],
-        disallowedRoutes: []
-      }
+        allowedDomains: [ 'localhost:443' ],
+        disallowedRoutes: [],
+      },
     }),
     CardModule,
-    SplitButtonModule
+    SplitButtonModule,
+    ConfirmPopupModule,
   ],
   providers: [
     // { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true },
     { provide: environment, useValue: environment },
-    AuthGuard
+    AuthGuard,
   ],
   bootstrap: [ AppComponent ],
 })

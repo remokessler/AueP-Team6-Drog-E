@@ -1,13 +1,11 @@
-import { IUser } from '../../master-data-management/models/user';
-import { IRobot } from './robot';
 import { ITherapy } from '../../patient-management/models/therapy';
-import { IStay } from '../../patient-management/models/stay';
+import { ITimeTableEntry } from './time-table-entry';
 
 export interface ITherapyIteration {
   id: number;
-  user: IUser;
-  robot: IRobot;
   therapy: ITherapy;
-  stay: IStay;
+  therapyId: number;
+  timeTableEntry: ITimeTableEntry;
+  timeTableEntryId: number;
   timeDone: Date;
 }

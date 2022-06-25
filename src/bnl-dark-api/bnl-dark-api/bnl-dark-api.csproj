@@ -5,7 +5,7 @@
         <Nullable>enable</Nullable>
         <IsPackable>false</IsPackable>
         <SpaRoot>./../../bnl-dark-web</SpaRoot>
-        <SpaProxyServerUrl>https://localhost:44456</SpaProxyServerUrl>
+        <SpaProxyServerUrl>https://localhost:443</SpaProxyServerUrl>
         <SpaProxyLaunchCommand>npm start</SpaProxyLaunchCommand>
         <RootNamespace>bnl_dark_api</RootNamespace>
         <ImplicitUsings>enable</ImplicitUsings>

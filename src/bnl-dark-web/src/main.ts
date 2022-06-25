@@ -8,7 +8,6 @@ export function getBaseUrl() {
   return document.getElementsByTagName('base')[0].href;
 }
 
-console.log('backend url', environment.backendUrl);
 const providers = [
   { provide: 'BASE_URL', useValue: environment.backendUrl, deps: [] }
 ];

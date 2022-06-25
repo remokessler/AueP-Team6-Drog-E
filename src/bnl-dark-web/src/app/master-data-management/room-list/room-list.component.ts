@@ -17,6 +17,7 @@ export class RoomListComponent {
     {
       title: 'Floor',
       field: 'floor',
+      display: (field:any) => field.toString()
     },
     {
       title: 'Name',

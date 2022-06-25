@@ -1,2 +1,41 @@
-<h1>Welcome!</h1>
-<p>What would you like to do?</p>
+<p-card header="Welcome">
+  <p>How can BnL-Dark-Web assist you today?</p>
+  <div class="row">
+    <a [routerLink]="'/patients'" class="col-6 col-md-3 mt-4">
+      <div class="card">
+        <img alt="..." class="card-img-top" src="/assets/patient.jpg">
+        <div class="card-body">
+          <h5 class="card-title">Patients</h5>
+          <p class="card-text">Register new patient, manage existing ones and prescribe them medicine. Be sure to give the right treatment, dead patients don't pay!</p>
+        </div>
+      </div>
+    </a>
+    <a [routerLink]="'/robots/1019'" class="col-6 col-md-3 mt-4">
+      <div class="card">
+        <img alt="..." class="card-img-top" src="/assets/drog-e.jpeg">
+        <div class="card-body">
+          <h5 class="card-title">Drog-E</h5>
+          <p class="card-text">Tell your best friend from work what he should do. You can also check out how he is doing right now!</p>
+        </div>
+      </div>
+    </a>
+    <a [routerLink]="'/medicines'" class="col-6 col-md-3 mt-4">
+      <div class="card">
+        <img alt="..." class="card-img-top" src="/assets/medicine.jpeg">
+        <div class="card-body">
+          <h5 class="card-title">Medicine</h5>
+          <p class="card-text">What better way to fix up your patients then with some pills, bandages and some needles. Watch out to not sting yourself!</p>
+        </div>
+      </div>
+    </a>
+    <a [routerLink]="'/users'" class="col-6 col-md-3 mt-4">
+      <div class="card">
+        <img alt="..." class="card-img-top" src="/assets/users.jpeg">
+        <div class="card-body">
+          <h5 class="card-title">Users</h5>
+          <p class="card-text">Manage all your employees here. Better watch out to not give access to the wrong people!</p>
+        </div>
+      </div>
+    </a>
+  </div>
+</p-card>

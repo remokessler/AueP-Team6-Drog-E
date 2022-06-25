@@ -99,7 +99,6 @@ export class ListComponent<T> implements OnInit {
     else if(this.staticFilter !== '' && this.staticFilter !== undefined && this.staticFilter !== null) {
       query = query.filter(builder => builder.filterPhrase(this.staticFilter));
     }
-    console.log('get query', query.toQuery());
     return query.toQuery();
   }
 

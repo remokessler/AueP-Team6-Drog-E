@@ -8,11 +8,15 @@
         <p-breadcrumb [model]="[]"></p-breadcrumb>
       </ng-template>
       <div class="p-toolbar-group-right">
-        <div  class="p-breadcrumb p-component">
+        <div class="p-breadcrumb p-component">
           <ul>
-            <li>
-              <a (click)="showUserPopUp()" class="p-element p-menuitem-link ng-star-inserted"
-                 title="Manage">Hello {{(userName | async)}}</a>
+            <li *ngIf="userName | async as username">
+              <a #logoutButton
+                 (click)="openLogoutDialog(logoutButton, username)"
+                 class="p-element p-menuitem-link ng-star-inserted"
+                 title="Manage"
+              ><i class="pi pi-user"></i><span class="d-none d-md-inline">&nbsp;{{username}}</span></a>
+              <p-confirmPopup [hideTransitionOptions]="'60ms'" [showTransitionOptions]="'60ms'"></p-confirmPopup>
             </li>
           </ul>
         </div>
@@ -24,7 +28,8 @@
 <user-popup (onDialogClosed)="closeUserPopUp()" [showDialog]="userPopupVisible"></user-popup>
 <p-sidebar (window:keydown.esc)="collapseSidebar()" [(visible)]="sidebarVisible"
            [closeOnEscape]="true" [fullScreen]="true"
-           [transitionOptions]="'125ms'">
+           [transitionOptions]="'125ms'"
+>
   <div class="navigation">
     <h1>Where would you like to go?</h1>
     <br>

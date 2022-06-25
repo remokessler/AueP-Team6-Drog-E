@@ -270,7 +270,7 @@ namespace bnl_dark_api.Migrations
                     b.Property<int>("StayId")
                         .HasColumnType("int");
 
-                    b.Property<int>("TimesDone")
+                    b.Property<int?>("TimesDone")
                         .HasColumnType("int");
 
                     b.Property<int>("TotalTimesToBeHealed")
@@ -298,7 +298,7 @@ namespace bnl_dark_api.Migrations
                     b.Property<int>("TherapyId")
                         .HasColumnType("int");
 
-                    b.Property<DateTimeOffset>("TimeDone")
+                    b.Property<DateTimeOffset?>("TimeDone")
                         .HasColumnType("datetimeoffset");
 
                     b.Property<int>("TimeTableEntryId")
@@ -327,14 +327,9 @@ namespace bnl_dark_api.Migrations
                     b.Property<DateTimeOffset>("StartTime")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("RobotId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("TimeTableEntries");
                 });
@@ -473,15 +468,7 @@ namespace bnl_dark_api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("bnl_dark_api.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Robot");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("bnl_dark_api.Models.AnamnesisRecord", b =>
